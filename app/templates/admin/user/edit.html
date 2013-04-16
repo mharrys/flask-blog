@@ -1,0 +1,13 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+  <div class="module">
+    <h1>Edit User</h1>
+    {% from "macro/form.html" import render_field, render_button %}
+    <form method="post" action="{{ url_for('admin.edit_user', name=user.name) }}">
+      {{ form.csrf_token }}
+      {{ render_field(form.name) }}
+      {{ render_button('Update') }}
+    </form>
+  </div>
+{% endblock %}

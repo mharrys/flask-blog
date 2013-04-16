@@ -1,0 +1,8 @@
+Flask
+Flask-Bcrypt
+Flask-Login
+Flask-Markdown
+Flask-Script
+Flask-SQLAlchemy
+Flask-WTF
+Unidecode

@@ -1,0 +1,30 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+    {% if date_archive %}
+      <div class="module">
+        <ul class="unstyled squish">
+          {% for parent in date_archive %}
+            {# only render one year when there is multiple month in the same year #}
+            {% if current_year != parent.year or loop.first %}
+              {% set current_year = parent.year %}
+              <li>
+              <h1><a href="{{ url_for('frontend.archive', year=parent.year) }}">{{ parent.year }}</a></h1>
+                {# guaranteed to have at least one child #}
+                <ul class="unstyled">
+                  {% for child in date_archive if child.year == parent.year %}
+                    <li><h3><a href="{{ url_for('frontend.archive', year=parent.year, month=child.month) }}">{{ child.month|month_name }} <small><em>({{ child.entries }} entr{{ child.entries|pluralize('y', 'ies') }})</em></small></a></h3></li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      {% from "macro/post.html" import render_posts %}
+      {{ render_posts(posts, compact=true) }}
+      <a href="{{ url_for('frontend.archive') }}" class="pager">Back</a>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% macro render_posts(posts, compact=false) %}
+  {% for post in posts %}
+    {{ render_post(post, compact) }}
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro render_post(post, compact=false) %}
+  <article class="module">
+    <h1><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
+    <h6 class="uppercase">{{ post.published|date_pretty }}</h6>
+    {% if not compact %}
+        {{ post.body|safe|markdown }}
+        {% set num_comments = post.comments|length %}
+        <a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ num_comments}} Comment{{ num_comments|pluralize }}</a>
+    {% endif %}
+  </article>
+{% endmacro %}
+
+
+{% macro render_post_form(form, action, button_label) %}
+  {% from "macro/form.html" import render_field %}
+  <form method="post" action="{{ action }}">
+    {{ form.csrf_token }}
+    {{ render_field(form.prev_title) }}
+    {{ render_field(form.title) }}
+    {{ render_field(form.body, rows="15") }}
+    <button class="button" type="submit">{{ button_label }}</button>
+  </form>
+{% endmacro %}
+
+
+{% macro post_form_script() %}
+  <script src="http://pagedown.googlecode.com/hg/Markdown.Converter.js"></script>
+  <script src="http://pagedown.googlecode.com/hg/Markdown.Sanitizer.js"></script>
+  <script>
+    $(function() {
+      var $textarea = $('textarea'),
+          $preview  = $('<div class="module" />').insertAfter($('.module')),
+          convert   = new Markdown.getSanitizingConverter().makeHtml;
+      $textarea.keyup(function() {
+        $preview.html('<h1>Preview</h1>' + convert($textarea.val()));
+      }).trigger('keyup');
+    });
+  </script>
+{% endmacro %}

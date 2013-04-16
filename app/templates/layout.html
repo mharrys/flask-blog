@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="container">
+    <h1 id="logo">Oh no!</h1>
+    <div class="module">
+      {% block error %}{% endblock %}
+    </div>
+    <a href="{{ url_for('frontend.index') }}" class="pager">Back to Blog</a>
+  </div>
+{% endblock %}

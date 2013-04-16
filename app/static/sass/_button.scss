@@ -1,0 +1,28 @@
+@import "color";
+@import "compass";
+@import "typography";
+
+@mixin button-base {
+    @include border-radius;
+    @include adjust-font-size-to(12px);
+    font-family: $code-font;
+    font-weight: 300;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    background: $primary-color;
+    color: $bg-color;
+    margin: 0;
+    padding: 0.3em 0.6em;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+
+    &:hover, &:focus {
+        background-color: darken($primary-color, 5%);
+    }
+}
+
+.button {
+    @include button-base;
+}

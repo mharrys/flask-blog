@@ -1,0 +1,72 @@
+@import "compass/typography";
+
+@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+@import url(http://fonts.googleapis.com/css?family=Oxygen);
+
+$relative-font-sizing   : true;
+$base-font-size         : 14px;
+$base-line-height       : 22px;
+@include establish-baseline;
+
+$font: "Oxygen", sans-serif;
+$code-font: "Oxygen Mono", monospace;
+
+.mono {
+    @include adjust-font-size-to(12px);
+    font-family: $code-font;
+    font-weight: 300;
+}
+
+body {
+    font-family: $font;
+    font-weight: 400;
+}
+
+code {
+    @include border-radius;
+    @include adjust-font-size-to(12px);
+    font-family: $code-font;
+    font-weight: 300;
+}
+
+button, input, textarea {
+    @include adjust-font-size-to(14px);
+    font-family: $font;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    @include padding-leader(0);
+    @include margin-leader(0);
+    @include padding-trailer(0);
+    @include margin-trailer(0);
+}
+
+h1 {
+    @include adjust-font-size-to(30px);
+}
+
+h2 {
+    @include adjust-font-size-to(28px);
+}
+
+h3 {
+    @include adjust-font-size-to(26px);
+}
+
+h4 {
+    @include adjust-font-size-to(24px);
+}
+
+h5 {
+    @include adjust-font-size-to(20px);
+}
+
+h6 {
+    @include adjust-font-size-to(16px);
+}
+
+small {
+    @include adjust-font-size-to(12px);
+}

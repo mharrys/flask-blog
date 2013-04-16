@@ -1,0 +1,16 @@
+{% extends "frontend/layout.html" %}
+
+{% block content %}
+  {% from "macro/post.html" import render_post %}
+  {{ render_post(post) }}
+
+  {% from "macro/comment.html" import render_comment_tree, render_comment with context %}
+  {{ render_comment_tree(post.comments, render_comment) }}
+
+  <div class="module">
+    <h3>Post a comment</h3>
+    {% from "macro/comment.html" import render_comment_form with context %}
+    {{ render_comment_form(form) }}
+  </div>
+  <a href="{{ url_for('frontend.index') }}" class="pager">Back</a>
+{% endblock %}

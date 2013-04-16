@@ -1,0 +1,19 @@
+{% macro render_field(field) %}
+  {% if field.type != 'HiddenField' %}
+    {{ field.label }}
+    {{ render_field_errors(field) }}
+  {% endif %}
+  {{ field(**kwargs)|safe }}
+{% endmacro %}
+
+
+{% macro render_field_errors(field) %}
+  {% for error in field.errors %}
+    <small>{{ error }}</small>
+  {% endfor %}
+{% endmacro %}
+
+
+{% macro render_button(value='Submit') %}
+  <button class="button" type="submit">{{ value }}</button>
+{% endmacro %}

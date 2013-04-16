@@ -1,3 +1,7 @@
+*.db
+app/static/.sass-cache/
+venv
+
 *.py[cod]
 
 # C extensions

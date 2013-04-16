@@ -1,0 +1,65 @@
+{% macro render_comment_form(form, comment=None) %}
+  {% from "macro/form.html" import render_field, render_button %}
+  {% if comment %}
+    <form id="{{ comment.id }}" class="hidden" method="post" action="{{ url_for('frontend.detail', slug=post.slug) }}">
+  {% else %}
+    <form method="post" action="{{ url_for('frontend.detail', slug=post.slug) }}">
+  {% endif %}
+    {{ form.csrf_token }}
+    {{ render_field(form.name) }}
+    {{ render_field(form.body, rows="5") }}
+    {% if comment %}
+      {{ render_field(form.reply_id, value=comment.id) }}
+    {% endif %}
+    {{ render_button(value='Post') }}
+  </form>
+{% endmacro %}
+
+
+{% macro render_comment_tree(comments, render) %}
+  <ul class="unstyled squish">
+    {% for comment in comments %}
+      {% if comment.is_root %}
+        <li>
+          {{ render(comment) }}
+          {% if comment.has_replies %}
+            {{ render_comment_replies(comment.replies, render) }}
+          {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endmacro %}
+
+
+{% macro render_comment_replies(comments, render) %}
+  <ul class="unstyled">
+    {% for comment in comments %}
+      <li>
+        {{ render(comment) }}
+        {% if comment.has_replies %}
+          {{ render_comment_replies(comment.replies, render) }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}
+
+
+{% macro render_comment(comment) %}
+  <div class="comment module">
+    <small><b>{{ comment.name|e }}</b> {{ comment.posted|timesince }} ago</small>
+    {{ comment.body|safe|markdown }}
+    <small><a id="reply" href="javascript:void(0)" onclick="$('#{{ comment.id }}').toggle('fast')">Reply</a></small>
+    {{ render_comment_form(form, comment) }}
+  </div>
+{% endmacro %}
+
+
+{% macro render_comment_admin(comment) %}
+  <div class="comment module">
+    <span class="mono">{{ comment.name|e }} | {{ comment.ip }} | {{ comment.posted|datetime }}</span>
+    {{ comment.body|safe|markdown }}
+    <small><a href="{{ url_for('admin.delete_comment', id=comment.id) }}">Delete</a></small>
+  </div>
+{% endmacro %}

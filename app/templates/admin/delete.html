@@ -1,0 +1,14 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+  <section class="module">
+    <h1>{{ title }}</h1>
+    <p>
+      Are you sure you want to delete <strong>{{ what }}</strong>?
+    </p>
+    {% from "macro/form.html" import render_button %}
+    <form method="post" action="{{ action }}">
+      {{ render_button(value="Delete") }}
+    </form>
+  </section>
+{% endblock %}

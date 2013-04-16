@@ -1,0 +1,30 @@
+$bg-color: #f5f2f0;
+$fg-color: #2E2E2E;
+$primary-color:#990055;
+$secondary-color: complement($primary-color);
+$module-color: #FFFFFF;
+
+a {
+    color: $primary-color;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    a {
+        @include unstyled-link;
+        @include hover-link;
+        @include link-colors(
+            $fg-color,
+            $fg-color,
+            $fg-color,
+            $fg-color,
+            $fg-color);
+    }
+}
+
+.special {
+    color: $secondary-color;
+}

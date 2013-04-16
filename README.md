@@ -1,4 +1,18 @@
-flask-blog
-==========
+Project still in early stages.
 
-Simple blog created with Flask.
+Install
+=======
+git clone https://github.com/mharrys/flask-blog.git
+cd flask-blog
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python manage.py init
+
+Test
+====
+python tests.py
+
+Run
+===
+python manage.py runserver

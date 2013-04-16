@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="container">
+    <div class="module">
+      <h1>Admin Login</h1>
+      {% from "macro/form.html" import render_field %}
+      <form method="post" action="{{ url_for('admin.login') }}">
+        {{ form.csrf_token }}
+        {{ render_field(form.username) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.remember) }}
+        <button class="button" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

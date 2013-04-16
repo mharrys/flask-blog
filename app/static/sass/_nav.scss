@@ -1,0 +1,15 @@
+@import "color";
+@import "susy";
+
+nav {
+    background-color: $fg-color;
+    a {
+        color: $module-color;
+        text-transform: uppercase;
+    }
+    ul {
+        @include horizontal-list(1em, left);
+        @include container;
+        padding: 1em;
+    }
+}

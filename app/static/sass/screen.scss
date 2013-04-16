@@ -1,0 +1,116 @@
+@import "base";
+@import "compass";
+@import "button";
+@import "color";
+@import "form";
+@import "nav";
+@import "typography";
+
+html {
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+body {
+    background: $bg-color;
+    color: $fg-color;
+}
+
+img, object {
+     max-width: 100%;
+}
+
+table {
+    width: 100%;
+    th {
+        text-align: left;
+        padding-right: 1em;
+    }
+    td {
+        padding-right: 0.5em;
+    }
+}
+
+.container {
+    @include container;
+    //@include susy-grid-background;
+    header, footer, .content {
+        clear: both;
+    }
+}
+
+@mixin module-base {
+    @include border-radius;
+    padding: 1em;
+    @include margin-leader(0.8);
+    @include margin-trailer(0.8);
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+ul.horizontal {
+    @include horizontal-list;
+}
+
+ul.unstyled {
+    list-style: none;
+}
+
+.module {
+    @include module-base;
+    background: $module-color;
+}
+
+.squish {
+    padding: 0;
+    margin: 0;
+}
+
+.push {
+    @include margin-leader(0.8);
+    @include margin-trailer(0.8);
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.hidden {
+    display: none;
+}
+
+.pager {
+    @include button-base;
+    @include margin-trailer(0.8);
+    background-color: $module-color;
+    color: $primary-color;
+    &:hover, &:focus {
+        background-color: $module-color;
+    }
+}
+
+blockquote {
+    border-left-style: solid;
+    border-width: 4px;
+    border-color: $bg-color;
+    font-style: italic;
+    padding-left: 1em;
+    cite {
+        @extend small;
+        display: block;
+        font-style: italic;
+    }
+}
+
+#logo {
+    @include adjust-font-size-to(55px);
+    @include margin-leader(0.2);
+    @include margin-trailer(0.2);
+}

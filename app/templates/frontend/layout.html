@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="github-fork-ribbon-wrapper right">
+    <div class="github-fork-ribbon">
+      <a href="https://github.com/mharrys/flask-blog">Fork me on GitHub</a>
+    </div>
+  </div>
+  <div class="container">
+    <header>
+      <h1 id="logo"><a href="{{ url_for('frontend.index') }}">Flask-Blog</a></h1>
+      <p class="uppercase squish left">Powered by <a href="http://compass-style.org">Compass</a>, <a href="http://flask.pocoo.org">Flask</a>, <a href="http://softwaremaniacs.org/soft/highlight/en">Highlight</a>, <a href="http://somerandomdude.com/work/iconic">Iconic</a>, <a href="http://sass-lang.com">Sass</a>, <a href="http://susy.oddbird.net">Susy</a> and <a href="http://www.vim.org">Vim</a>.</p>
+      <ul class="horizontal uppercase squish right">
+        <li><a href="{{ url_for('frontend.archive') }}">Archive</a></li>
+        <li><a href="{{ url_for('admin.overview') }}">Admin</a></li>
+      </ul>
+    </header>
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+  <div class="module">
+    <h1>Users</h1>
+    <a href="{{ url_for('admin.new_user') }}" class="button push">New User</a>
+  </div>
+  <div class="module">
+    <table>
+      <thead>
+        <tr>
+          <th width=10px></th>
+          <th>Name</th>
+          <th>Posts</th>
+          <th>Registered</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td><a href="{{ url_for('admin.delete_user', name=user.name) }}"><span class="iconic x"></span></a></td>
+            <td><a href="{{ url_for('admin.edit_user', name=user.name) }}">{{ user.name|e }}</td>
+            <td><a href="{{ url_for('admin.posts_by_user', name=user.name) }}">{{ user.posts|length }}</a></td>
+            <td><span class="mono">{{ user.registered|datetime }}</span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
