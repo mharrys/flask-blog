@@ -19,3 +19,6 @@ Project still in early stages.
 ## Screenshot
 A taste of the current design.
 ![Scrot](http://i.imgur.com/auFbqRD.png)
+
+Editing a post as Admin with markdown preview.
+![Scrot-Admin](http://i.imgur.com/5RNHWK9.png)
