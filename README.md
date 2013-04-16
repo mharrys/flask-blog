@@ -15,3 +15,7 @@ Project still in early stages.
 
 ## Run
     python manage.py runserver
+
+## Screenshot
+A taste of the current design.
+![Scrot](http://i.imgur.com/auFbqRD.png)
