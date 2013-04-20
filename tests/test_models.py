@@ -301,7 +301,3 @@ class TestComment(TestModel):
         comment_reply = add_comment(reply_id=self.comment.id)
         self.assertTrue(self.comment.has_replies)
         self.assertFalse(comment_reply.has_replies)
-
-
-if __name__ == '__main__':
-    unittest.main()
