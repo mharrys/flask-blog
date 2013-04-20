@@ -15,6 +15,8 @@ Project still in early stages.
 
 ## Run
     python manage.py runserver
+    
+Login with **admin** as default username and password.
 
 ## Screenshot
 A taste of the current design.
