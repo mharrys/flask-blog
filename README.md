@@ -11,11 +11,11 @@ Project still in early stages.
     python manage.py init
 
 ## Test
-    python tests.py
+    nosetests
 
 ## Run
     python manage.py runserver
-    
+
 Login with **admin** as default username and password.
 
 ## Screenshot
