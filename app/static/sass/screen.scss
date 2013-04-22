@@ -1,15 +1,34 @@
 @import "base";
 @import "compass";
+@import "compass/layout/sticky-footer";
 @import "button";
 @import "color";
 @import "form";
 @import "nav";
 @import "typography";
 
+@include sticky-footer(10em, '#wrap', '#wrap_footer', 'footer');
+
+header footer {
+    clear: both;
+}
+
+header {
+    @include padding-leader(1);
+    @include container;
+}
+
+footer {
+    background: $bg-color-dark;
+}
+
+html body {
+    height: 100%;
+}
+
 html {
     overflow: -moz-scrollbars-vertical;
     overflow-y: scroll;
-    height: 100%;
 }
 
 body {
@@ -17,38 +36,26 @@ body {
     color: $fg-color;
 }
 
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid $fg-color;
+    margin: 1em 0;
+    padding: 0;
+}
+
 img, object {
-     max-width: 100%;
+    @include border-radius;
+    max-width: 100%;
+    border: 2px solid $bg-color-dark;
 }
 
 table {
     width: 100%;
     th {
         text-align: left;
-        padding-right: 1em;
     }
-    td {
-        padding-right: 0.5em;
-    }
-}
-
-.container {
-    @include container;
-    //@include susy-grid-background;
-    header, footer, .content {
-        clear: both;
-    }
-}
-
-@mixin module-base {
-    @include border-radius;
-    padding: 1em;
-    @include margin-leader(0.8);
-    @include margin-trailer(0.8);
-}
-
-.uppercase {
-    text-transform: uppercase;
 }
 
 ul.horizontal {
@@ -59,11 +66,6 @@ ul.unstyled {
     list-style: none;
 }
 
-.module {
-    @include module-base;
-    background: $module-color;
-}
-
 .squish {
     padding: 0;
     margin: 0;
@@ -71,7 +73,7 @@ ul.unstyled {
 
 .push {
     @include margin-leader(0.8);
-    @include margin-trailer(0.8);
+    @include margin-trailer(1);
 }
 
 .left {
@@ -86,21 +88,21 @@ ul.unstyled {
     display: none;
 }
 
-.pager {
-    @include button-base;
+.block {
+    display: block;
+}
+
+.panel {
+    @include border-radius;
     @include margin-trailer(0.8);
-    background-color: $module-color;
-    color: $primary-color;
-    &:hover, &:focus {
-        background-color: $module-color;
-    }
+    padding: 0.8em;
+    background-color: $bg-color-dark;
 }
 
 blockquote {
     border-left-style: solid;
-    border-width: 4px;
-    border-color: $bg-color;
-    font-style: italic;
+    border-width: 0.5em;
+    border-color: $bg-color-dark;
     padding-left: 1em;
     cite {
         @extend small;
@@ -109,8 +111,47 @@ blockquote {
     }
 }
 
+@mixin logo-base($fg, $bg) {
+    @include border-radius;
+
+    color: $fg;
+    background-color: $bg;
+    padding-left: 1em;
+
+    a {
+        color: $bg-color;
+
+        &:hover, &:focus {
+            color: $fg-color;
+        }
+    }
+}
+
 #logo {
-    @include adjust-font-size-to(55px);
-    @include margin-leader(0.2);
-    @include margin-trailer(0.2);
+    @include logo-base($bg-color, $primary-color);
+}
+
+#login-logo {
+    @include logo-base($fg-color, $bg-color-dark);
+}
+
+#content {
+    @include container;
+    @include padding-leader(0.5);
+    @include padding-trailer(0.5);
+}
+
+#about {
+    @include padding-leader(1);
+    @include span-columns(5, 10);
+}
+
+#code {
+    @include padding-leader(1);
+    @include span-columns(5 omega, 10);
+}
+
+#post-meta {
+    border: 0;
+    border-bottom: 1px solid $fg-color;
 }

@@ -1,46 +1,86 @@
-{% macro render_posts(posts, compact=false) %}
+{% macro render_posts(posts) %}
   {% for post in posts %}
-    {{ render_post(post, compact) }}
+    {{ render_post(post) }}
   {% endfor %}
 {% endmacro %}
 
 
-{% macro render_post(post, compact=false) %}
-  <article class="module">
-    <h1><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
-    <h6 class="uppercase">{{ post.published|date_pretty }}</h6>
-    {% if not compact %}
-        {{ post.body|safe|markdown }}
+{% macro render_post(post) %}
+  <article>
+    <section id="post-meta">
+      <h1><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
+      <span class="uppercase">{{ post.published|date_pretty }}</span>
+      {#
         {% set num_comments = post.comments|length %}
-        <a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ num_comments}} Comment{{ num_comments|pluralize }}</a>
-    {% endif %}
+        <span class="right block"><a href="{{ url_for('frontend.detail', slug=post.slug) }}#comments"><span class="iconic comment_fill"></span> {{ num_comments }} Comment{{ num_comments|pluralize }}</a></span>
+      #}
+    </section>
+    {{ post.body|safe|markdown }}
   </article>
 {% endmacro %}
 
 
 {% macro render_post_form(form, action, button_label) %}
-  {% from "macro/form.html" import render_field %}
+  {% from "macro/form.html" import render_field, render_button_primary %}
   <form method="post" action="{{ action }}">
     {{ form.csrf_token }}
     {{ render_field(form.prev_title) }}
     {{ render_field(form.title) }}
-    {{ render_field(form.body, rows="15") }}
-    <button class="button" type="submit">{{ button_label }}</button>
+    {{ render_field(form.body, rows="12") }}
+    {{ render_button_primary(button_label) }}
   </form>
 {% endmacro %}
 
 
-{% macro post_form_script() %}
-  <script src="http://pagedown.googlecode.com/hg/Markdown.Converter.js"></script>
-  <script src="http://pagedown.googlecode.com/hg/Markdown.Sanitizer.js"></script>
-  <script>
-    $(function() {
-      var $textarea = $('textarea'),
-          $preview  = $('<div class="module" />').insertAfter($('.module')),
-          convert   = new Markdown.getSanitizingConverter().makeHtml;
-      $textarea.keyup(function() {
-        $preview.html('<h1>Preview</h1>' + convert($textarea.val()));
-      }).trigger('keyup');
-    });
-  </script>
+{% macro render_archive(archive, macro_post_render) %}
+  <ul class="unstyled squish">
+    {% for y in archive %}
+      {% if current_year != y.year or loop.first %}
+        {% set current_year = y.year %}
+        <li>
+          <h2>{{ y.year }}</h2>
+          <ul class="unstyled">
+            {% for m in archive if m.year == y.year %}
+              {% if current_month != m.month or loop.first %}
+                {% set current_month = m.month %}
+                <li>
+                  <h2>{{ m.month|month_name }}</h2>
+                  <ul class="unstyled">
+                    {% for p in archive if p.month == m.month and p.year == y.year %}
+                    <li>
+                      {{ macro_post_render(p.Post) }}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endmacro %}
+
+
+{% macro render_archive_post(post) %}
+  <ul class="horizontal">
+    <li><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title }}</a></li>
+    {% set num_comments = post.comments|length %}
+    {% if num_comments > 0 %}
+      <li><a href="{{ url_for('frontend.detail', slug=post.slug) }}#comments"><span class="iconic comment_fill" /> {{ num_comments }}</a></li>
+    {% endif %}
+  </ul>
+{% endmacro %}
+
+
+{% macro render_archive_post_admin(post) %}
+  <ul class="horizontal">
+    <li><a href="{{ url_for('admin.delete_post', slug=post.slug) }}"><span class="iconic x" /></a></li>
+    <li><a href="{{ url_for('admin.edit_post', slug=post.slug) }}">{{ post.title }}</a></li>
+    {% set num_comments = post.comments|length %}
+    {% if num_comments > 0 %}
+      <li><a href="{{ url_for('admin.post_comments', slug=post.slug) }}"><span class="iconic comment_fill" /> {{ num_comments }}</a></li>
+    {% endif %}
+  </ul>
 {% endmacro %}

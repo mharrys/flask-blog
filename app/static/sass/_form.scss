@@ -4,19 +4,26 @@
 form {
     small {
         display: block;
-        color: $primary-color;
+        color: $secondary-color;
     }
-    .button {
+
+    button {
         margin-top: 1em;
+        margin-bottom: 1em;
     }
 }
 
 input, textarea {
+    @include border-radius;
     @include box-sizing(border-box);
-    width: 100%;
-    border:1px solid darken($bg-color, 16%);
-    padding: 0.5em 0.5em;
+
     resize: vertical;
+    width: 100%;
+    padding: 0.5em 0.5em;
+
+    border: 1px solid darken($bg-color, 5%);
+    background: $bg-color-dark;
+    color: $fg-color;
 }
 
 input[type="checkbox"] {

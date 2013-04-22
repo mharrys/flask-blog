@@ -1,9 +1,10 @@
 @import "susy";
 
-$total-columns: 12;
+$total-columns: 10;
 $column-width: 4em;
 $gutter-width: 1em;
 $grid-padding: $gutter-width;
-$container-width: 50em;
 
-$show-grid-backgrounds: true;
+.container {
+    @include container;
+}

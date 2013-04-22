@@ -1,20 +1,18 @@
 @import "compass/typography";
 
-@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
-@import url(http://fonts.googleapis.com/css?family=Oxygen);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
 $relative-font-sizing   : true;
-$base-font-size         : 14px;
+$base-font-size         : 16px;
 $base-line-height       : 22px;
 @include establish-baseline;
 
-$font: "Oxygen", sans-serif;
-$code-font: "Oxygen Mono", monospace;
+$font: 'Droid Sans', sans-serif;
+$code-font: 'Droid Sans Mono', monospace;
 
-.mono {
-    @include adjust-font-size-to(12px);
-    font-family: $code-font;
-    font-weight: 300;
+.uppercase {
+    text-transform: uppercase;
 }
 
 body {
@@ -22,51 +20,45 @@ body {
     font-weight: 400;
 }
 
-code {
+pre code {
     @include border-radius;
-    @include adjust-font-size-to(12px);
+    @include adjust-font-size-to(14px);
     font-family: $code-font;
-    font-weight: 300;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
 }
 
-button, input, textarea {
+input, textarea {
     @include adjust-font-size-to(14px);
     font-family: $font;
     font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-    @include padding-leader(0);
-    @include margin-leader(0);
-    @include padding-trailer(0);
-    @include margin-trailer(0);
+h1, h2, h3 {
+    font-family: $font;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+
+    small {
+        font-size: 60%;
+        font-style: italic;
+    }
 }
 
 h1 {
-    @include adjust-font-size-to(30px);
+    @include adjust-font-size-to(32px);
 }
 
 h2 {
-    @include adjust-font-size-to(28px);
-}
-
-h3 {
-    @include adjust-font-size-to(26px);
-}
-
-h4 {
     @include adjust-font-size-to(24px);
 }
 
-h5 {
-    @include adjust-font-size-to(20px);
-}
-
-h6 {
-    @include adjust-font-size-to(16px);
+h3 {
+    @include adjust-font-size-to(18px);
 }
 
 small {
-    @include adjust-font-size-to(12px);
+    @include adjust-font-size-to(14px);
 }

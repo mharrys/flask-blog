@@ -1,30 +1,32 @@
-$bg-color: #f5f2f0;
-$fg-color: #2E2E2E;
-$primary-color:#990055;
-$secondary-color: complement($primary-color);
-$module-color: #FFFFFF;
+$bg-color: #262626;
+$bg-color-dark: #212121;
+$fg-color: #BFBFB8;
+$fg-color-light: lighten($fg-color, 12%);
+
+$primary-color: #498C8C;
+$secondary-color: #8C4949;
 
 a {
     color: $primary-color;
     text-decoration: none;
+
     &:hover {
-        text-decoration: underline;
+        color: $secondary-color;
+        text-decoration: none;
     }
 }
 
-h1, h2, h3, h4, h5, h6 {
+pre code {
+    background: none;
+}
+
+h1, h2, h3 {
     a {
-        @include unstyled-link;
-        @include hover-link;
         @include link-colors(
             $fg-color,
-            $fg-color,
+            $fg-color-light,
             $fg-color,
             $fg-color,
             $fg-color);
     }
-}
-
-.special {
-    color: $secondary-color;
 }

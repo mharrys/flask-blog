@@ -1,5 +1,5 @@
 {% macro render_comment_form(form, comment=None) %}
-  {% from "macro/form.html" import render_field, render_button %}
+  {% from "macro/form.html" import render_field, render_button_primary %}
   {% if comment %}
     <form id="{{ comment.id }}" class="hidden" method="post" action="{{ url_for('frontend.detail', slug=post.slug) }}">
   {% else %}
@@ -11,19 +11,19 @@
     {% if comment %}
       {{ render_field(form.reply_id, value=comment.id) }}
     {% endif %}
-    {{ render_button(value='Post') }}
+    {{ render_button_primary(value='Post') }}
   </form>
 {% endmacro %}
 
 
-{% macro render_comment_tree(comments, render) %}
+{% macro render_comment_tree(comments, macro_render_comment) %}
   <ul class="unstyled squish">
     {% for comment in comments %}
       {% if comment.is_root %}
         <li>
-          {{ render(comment) }}
+          {{ macro_render_comment(comment) }}
           {% if comment.has_replies %}
-            {{ render_comment_replies(comment.replies, render) }}
+            {{ render_comment_replies(comment.replies, macro_render_comment) }}
           {% endif %}
         </li>
       {% endif %}
@@ -32,13 +32,13 @@
 {% endmacro %}
 
 
-{% macro render_comment_replies(comments, render) %}
+{% macro render_comment_replies(comments, macro_render_comment) %}
   <ul class="unstyled">
     {% for comment in comments %}
       <li>
-        {{ render(comment) }}
+        {{ macro_render_comment(comment) }}
         {% if comment.has_replies %}
-          {{ render_comment_replies(comment.replies, render) }}
+          {{ render_comment_replies(comment.replies, macro_render_comment) }}
         {% endif %}
       </li>
     {% endfor %}
@@ -47,18 +47,18 @@
 
 
 {% macro render_comment(comment) %}
-  <div class="comment module">
-    <small><b>{{ comment.name|e }}</b> {{ comment.posted|timesince }} ago</small>
+  <div class="panel">
+    <b>{{ comment.name|e }}</b> <i><small>{{ comment.posted|timesince }} ago</small></i>
     {{ comment.body|safe|markdown }}
-    <small><a id="reply" href="javascript:void(0)" onclick="$('#{{ comment.id }}').toggle('fast')">Reply</a></small>
+    <a id="reply" href="javascript:void(0)" onclick="$('#{{ comment.id }}').toggle('fast')">Reply</a>
     {{ render_comment_form(form, comment) }}
   </div>
 {% endmacro %}
 
 
 {% macro render_comment_admin(comment) %}
-  <div class="comment module">
-    <span class="mono">{{ comment.name|e }} | {{ comment.ip }} | {{ comment.posted|datetime }}</span>
+  <div class="panel">
+    <b>{{ comment.name|e }}</b> <small>({{ comment.ip }}) | {{ comment.posted|datetime }} ({{ comment.posted|timesince }} ago)</small>
     {{ comment.body|safe|markdown }}
     <small><a href="{{ url_for('admin.delete_comment', id=comment.id) }}">Delete</a></small>
   </div>

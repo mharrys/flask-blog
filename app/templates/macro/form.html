@@ -14,6 +14,16 @@
 {% endmacro %}
 
 
-{% macro render_button(value='Submit') %}
-  <button class="button" type="submit">{{ value }}</button>
+{% macro render_button(value='Submit', class='') %}
+  <button class="button {{ class }}" type="submit">{{ value }}</button>
+{% endmacro %}
+
+
+{% macro render_button_primary(value='Submit') %}
+  {{ render_button(value, 'primary') }}
+{% endmacro %}
+
+
+{% macro render_button_secondary(value='Submit') %}
+  {{ render_button(value, 'secondary') }}
 {% endmacro %}

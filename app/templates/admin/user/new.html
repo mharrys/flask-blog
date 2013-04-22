@@ -1,15 +1,14 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  <div class="module">
-    <h1>New User</h1>
-    {% from "macro/form.html" import render_field, render_button %}
-    <form method="post" action="{{ url_for('admin.new_user') }}">
-      {{ form.csrf_token }}
-      {{ render_field(form.name) }}
-      {{ render_field(form.password) }}
-      {{ render_field(form.confirm) }}
-      {{ render_button('Register') }}
-    </form>
-  </div>
+  <h1>New User</h1>
+
+  {% from "macro/form.html" import render_field, render_button_secondary %}
+  <form method="post" action="{{ url_for('admin.new_user') }}">
+    {{ form.csrf_token }}
+    {{ render_field(form.name) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.confirm) }}
+    {{ render_button_secondary('Register') }}
+  </form>
 {% endblock %}

@@ -1,14 +1,20 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  <div class="module">
-    <h1>Edit Post</h1>
-    {% from "macro/post.html" import render_post_form %}
-    {{ render_post_form(form=form, action=url_for('admin.edit_post', slug=post.slug), button_label='Edit') }}
-  </div>
-{% endblock %}
+  <h1>Edit Post</h1>
 
-{% block script %}
-  {% from "macro/post.html" import post_form_script %}
-  {{ post_form_script() }}
+  <section class="push">
+    <h3>
+      Published {{ post.published|datetime }}
+      {% if post.is_edited %}
+        (Edited {{ post.edited|datetime }})
+      {% endif %}
+    </h3>
+  </section>
+
+  {% from "macro/post.html" import render_post_form %}
+  {{ render_post_form(form=form, action=url_for('admin.edit_post', slug=post.slug), button_label='Update') }}
+
+  {% from "macro/post.html" import render_post %}
+  {{ render_post(post) }}
 {% endblock %}

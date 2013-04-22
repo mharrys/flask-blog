@@ -52,7 +52,7 @@ def date(value):
 
 def date_pretty(value):
     """Formats datetime object to a Month dd, yyyy string."""
-    return value.strftime('%b %d, %Y')
+    return value.strftime('%B %d, %Y')
 
 
 def datetime(value):

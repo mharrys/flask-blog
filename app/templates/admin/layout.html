@@ -2,15 +2,16 @@
 
 {% block body %}
   <nav>
-    <ul>
-      <li><a href="{{ url_for('frontend.index') }}">Blog</a></li>
-      <li><a href="{{ url_for('admin.overview') }}">Overview</a></li>
-      <li><a href="{{ url_for('admin.users') }}">User</a></li>
-      <li><a href="{{ url_for('admin.posts') }}">Post</a></li>
-      <li class="right"><a href="{{ url_for('admin.logout') }}">Logout</a></li>
-    </ul>
+    <section class="items">
+      <a class="item" href="{{ url_for('frontend.index') }}">Blog</a>
+      <a class="item" href="{{ url_for('admin.overview') }}">Overview</a>
+      <a class="item" href="{{ url_for('admin.users') }}">User</a>
+      <a class="item" href="{{ url_for('admin.posts') }}">Post</a>
+      <a class="right block" href="{{ url_for('admin.logout') }}">Logout</a>
+      <a class="item right block" href="#">{{ current_user.name }}</a>
+    </section>
   </nav>
-  <div class="container">
+  <section id="content">
     {% block content %}{% endblock %}
-  </div>
+  </section>
 {% endblock %}

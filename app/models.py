@@ -67,15 +67,16 @@ class PostQuery(BaseQuery):
         return self.filter_by(slug=slug).first_or_404()
 
     def date_archive(self):
-        """Return archive where every post grouped by year and month."""
+        """Return archive where every post is grouped by year and month."""
         year = func.extract('year', Post.published)
         month = func.extract('month', Post.published)
-        count = func.count()
         return db.session.query(year.label('year'),
                                 month.label('month'),
-                                count.label('entries')) \
-                         .order_by(year.desc(), month.desc()) \
-                         .group_by(year, month) \
+                                Post) \
+                         .order_by(year.desc(),
+                                   month.desc(),
+                                   Post.published.desc()) \
+                         .group_by(year, month, Post.title) \
                          .all()
 
     def filter_by_latest(self):
@@ -143,6 +144,11 @@ class Post(db.Model):
         self.title = title
         self.body = body
         self.slug = slugify(self.published, title)
+
+    @property
+    def is_edited(self):
+        """Validate if this post has been edited since published."""
+        return self.edited > self.published
 
 
 class CommentQuery(BaseQuery):

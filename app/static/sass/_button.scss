@@ -2,27 +2,35 @@
 @import "compass";
 @import "typography";
 
-@mixin button-base {
+@mixin button-base($bg) {
     @include border-radius;
-    @include adjust-font-size-to(12px);
-    font-family: $code-font;
-    font-weight: 300;
+    @include adjust-font-size-to(14px);
+
+    font-family: $font;
+    font-weight: 700;
     text-decoration: none;
     text-transform: uppercase;
 
-    background: $primary-color;
-    color: $bg-color;
-    margin: 0;
-    padding: 0.3em 0.6em;
+    background: $bg;
+    color: $fg-color;
+    padding: 0.5em 1.5em;
     border: none;
-    cursor: pointer;
     display: inline-block;
 
     &:hover, &:focus {
-        background-color: darken($primary-color, 5%);
+        color: $fg-color-light;
+        background-color: darken($bg, 3%);
     }
 }
 
 .button {
-    @include button-base;
+    @include button-base($bg-color-dark);
+}
+
+.button.primary {
+    @include button-base(darken($primary-color, 5%));
+}
+
+.button.secondary {
+    @include button-base($secondary-color);
 }

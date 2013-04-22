@@ -1,22 +1,37 @@
 {% extends "base.html" %}
 
 {% block body %}
-  <div class="github-fork-ribbon-wrapper right">
-    <div class="github-fork-ribbon">
-      <a href="https://github.com/mharrys/flask-blog">Fork me on GitHub</a>
-    </div>
-  </div>
-  <div class="container">
+  <div id="wrap">
     <header>
-      <h1 id="logo"><a href="{{ url_for('frontend.index') }}">Flask-Blog</a></h1>
-      <p class="uppercase squish left">Powered by <a href="http://compass-style.org">Compass</a>, <a href="http://flask.pocoo.org">Flask</a>, <a href="http://softwaremaniacs.org/soft/highlight/en">Highlight</a>, <a href="http://somerandomdude.com/work/iconic">Iconic</a>, <a href="http://sass-lang.com">Sass</a>, <a href="http://susy.oddbird.net">Susy</a> and <a href="http://www.vim.org">Vim</a>.</p>
-      <ul class="horizontal uppercase squish right">
-        <li><a href="{{ url_for('frontend.archive') }}">Archive</a></li>
-        <li><a href="{{ url_for('admin.overview') }}">Admin</a></li>
-      </ul>
+      <div id="logo">
+        <h1><a href="{{ url_for('frontend.index') }}"><span class="iconic eye"></span> Flask-Blog</a></h1>
+      </div>
+      <div class="left uppercase">
+        Powered by <a href="http://compass-style.org">Compass</a>, <a href="http://flask.pocoo.org">Flask</a>, <a href="http://softwaremaniacs.org/soft/highlight/en">Highlight</a>, <a href="http://somerandomdude.com/work/iconic">Iconic</a>, <a href="http://sass-lang.com">Sass</a>, <a href="http://susy.oddbird.net">Susy</a> and <a href="http://www.vim.org">Vim</a>
+      </div>
+      <div class="right uppercase">
+        <a href="{{ url_for('frontend.archive') }}">Archive</a>
+      </div>
     </header>
-    <div class="content">
+
+    <section id="content">
       {% block content %}{% endblock %}
+    </section>
+
+    <div id="wrap_footer">
     </div>
   </div>
+
+  <footer>
+    <section class="container">
+      <div id="about">
+        <h3><span class="iconic user" /> About</h3>
+        I started this project to learn Python and Flask but was also interested to see how much web development has changed since I last coded some PHP back in 2003.
+      </div>
+      <div id="code">
+        <h3><span class="heart_fill" /> Code</h3>
+        The code is open source and available at <a href="https://github.com/mharrys/flask-blog">GitHub</a>.
+      </div>
+    </section>
+  </footer>
 {% endblock %}

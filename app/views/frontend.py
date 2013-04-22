@@ -21,20 +21,10 @@ def index(page=1):
 
 
 @mod.route('/archive')
-@mod.route('/archive/<int:year>')
-@mod.route('/archive/<int:year>/<int:month>')
-@mod.route('/archive/<int:year>/<int:month>/<int:day>')
-def archive(year=None, month=None, day=None):
-    """View full archive or by specified date."""
-    date_archive = posts = None
-    if year:
-        posts = Post.query.filter_by_date(year, month, day) \
-                          .order_by(Post.published.desc())
-    else:
-        date_archive = Post.query.date_archive()
-    return render_template('archive.html',
-                           posts=posts,
-                           date_archive=date_archive)
+def archive():
+    """View full archive."""
+    archive = Post.query.date_archive()
+    return render_template('archive.html', archive=archive)
 
 
 @mod.route('/<path:slug>', methods=['GET', 'POST'])

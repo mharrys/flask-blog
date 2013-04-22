@@ -1,14 +1,8 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  <div class="module">
-    <h1>New Post</h1>
-    {% from "macro/post.html" import render_post_form %}
-    {{ render_post_form(form=form, action=url_for('admin.new_post'), button_label='Post') }}
-  </div>
-{% endblock %}
+  <h1>New Post</h1>
 
-{% block script %}
-  {% from "macro/post.html" import post_form_script %}
-  {{ post_form_script() }}
+  {% from "macro/post.html" import render_post_form %}
+  {{ render_post_form(form=form, action=url_for('admin.new_post'), button_label='Publish') }}
 {% endblock %}

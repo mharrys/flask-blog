@@ -6,9 +6,9 @@
     <p>
       Are you sure you want to delete <strong>{{ what }}</strong>?
     </p>
-    {% from "macro/form.html" import render_button %}
+    {% from "macro/form.html" import render_button_secondary %}
     <form method="post" action="{{ action }}">
-      {{ render_button(value="Delete") }}
+      {{ render_button_secondary(value="Delete") }}
     </form>
   </section>
 {% endblock %}

@@ -2,14 +2,25 @@
 @import "susy";
 
 nav {
-    background-color: $fg-color;
-    a {
-        color: $module-color;
-        text-transform: uppercase;
-    }
-    ul {
-        @include horizontal-list(1em, left);
+    color: $fg-color;
+    background-color: $bg-color-dark;
+    padding: 1em;
+
+    .items {
         @include container;
-        padding: 1em;
+        text-align: left;
+        .item {
+            padding-right: 1em;
+        }
+    }
+
+    a {
+        color: $fg-color;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &:hover {
+            color: $fg-color-light;
+        }
     }
 }

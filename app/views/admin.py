@@ -94,15 +94,16 @@ def delete_user(name):
 @login_required
 def posts():
     """View all posts."""
-    posts = Post.query.filter_by_latest()
-    return render_template('post/list.html', posts=posts)
+    archive = Post.query.date_archive()
+    return render_template('post/list.html', archive=archive)
 
 
 @mod.route('/posts/user/<name>')
 def posts_by_user(name):
     """View all posts published by specified author."""
     user = User.query.filter_by_name_or_404(name=name)
-    return render_template('post/list.html', user=user, posts=user.posts)
+    archive = Post.query.date_archive(user.id)
+    return render_template('post/list.html', user=user, archive=archive)
 
 
 @mod.route('/posts/new', methods=['GET', 'POST'])
@@ -114,7 +115,7 @@ def new_post():
         post = Post(form.title.data, form.body.data, current_user.id)
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for('admin.posts'))
+        return redirect(url_for('admin.edit_post', slug=post.slug))
     return render_template('post/new.html', form=form)
 
 
@@ -127,7 +128,6 @@ def edit_post(slug):
     if form.validate_on_submit():
         post.edit(form.title.data, form.body.data)
         db.session.commit()
-        return redirect(url_for('admin.posts'))
     return render_template('post/edit.html', post=post, form=form)
 
 
