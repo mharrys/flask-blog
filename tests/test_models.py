@@ -193,6 +193,8 @@ class TestPost(TestModel):
         # assert default post is grouped correctly
         self.assertEqual(now.year, q[0].year)
         self.assertEqual(now.month, q[0].month)
+        # assert first post is included
+        self.assertEqual(self.post.id, q[0].Post.id)
 
     def test_filter_by_latest(self):
         latest_post = add_post()
