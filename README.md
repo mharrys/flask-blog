@@ -19,8 +19,8 @@ Project still in early stages.
 Login with **admin** as default username and password.
 
 ## Screenshot
-A taste of the current design.
-![Scrot](http://i.imgur.com/auFbqRD.png)
+A taste of the current frontend design.
+![Scrot](http://i.imgur.com/GEY4Fm5.png)
 
-Editing a post as Admin with markdown preview.
-![Scrot-Admin](http://i.imgur.com/5RNHWK9.png)
+A taste of the current admin design.
+![Scrot-Admin](http://i.imgur.com/dxekGka.png)
