@@ -4,9 +4,7 @@
   {% set num_users = users.count() %}
   <h1>{{ num_users }} User{{ num_users|pluralize }}</h1>
 
-  <div class="push">
-    <a href="{{ url_for('admin.new_user') }}" class="button secondary">New User</a>
-  </div>
+  <a href="{{ url_for('admin.new_user') }}" class="button secondary">New User</a>
 
   {% for user in users %}
     <section class="panel">

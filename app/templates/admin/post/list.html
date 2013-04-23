@@ -4,9 +4,7 @@
   {% set num_posts = archive|length %}
   <h1>{{ num_posts }} Post{{ num_posts|pluralize }}</h1>
 
-  <div class="push">
-    <a href="{{ url_for('admin.new_post') }}" class="button secondary">New Post</a>
-  </div>
+  <a href="{{ url_for('admin.new_post') }}" class="button secondary">New Post</a>
 
   {% from "macro/post.html" import render_archive, render_archive_post_admin %}
   {{ render_archive(archive, render_archive_post_admin) }}
