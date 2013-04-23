@@ -8,7 +8,7 @@
       <a class="item" href="{{ url_for('admin.users') }}">User</a>
       <a class="item" href="{{ url_for('admin.posts') }}">Post</a>
       <a class="right block" href="{{ url_for('admin.logout') }}">Logout</a>
-      <a class="item right block" href="#">{{ current_user.name }}</a>
+      <a class="item right block" href="{{ url_for('admin.profile') }}">{{ current_user.name }}</a>
     </section>
   </nav>
   <section id="content">

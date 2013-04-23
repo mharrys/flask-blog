@@ -24,6 +24,13 @@ def login():
     return render_template('login.html', form=form)
 
 
+@mod.route('/profile')
+@login_required
+def profile():
+    """View authenticated user profile."""
+    return render_template('user/profile.html', user=current_user)
+
+
 @mod.route('/logout')
 @login_required
 def logout():
