@@ -89,12 +89,12 @@ def dropdb():
     print('done!')
 
 
-POST_1 = """
+POST_1 = u"""
 First blog post.
 """
 
 
-POST_2 = """
+POST_2 = u"""
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel ipsum
 lectus. Pellentesque tempus enim sed leo imperdiet non lobortis nulla
 sollicitudin. Maecenas arcu orci, interdum eu rhoncus ut, blandit id felis.
@@ -117,7 +117,7 @@ ultrices posuere cubilia.
 """
 
 
-POST_3 = """
+POST_3 = u"""
 Maecenas ut gravida nisi. Aenean feugiat orci non quam vehicula accumsan.
 Nullam scelerisque elementum sollicitudin. Sed vel tellus nisi, non tincidunt
 augue. Aliquam at nulla ut sem mollis tincidunt.
@@ -158,7 +158,7 @@ ultrices neque. Quisque eget turpis et sapien luctus auctor in ac magna.
 """
 
 
-POST_5 = """
+POST_5 = u"""
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel ipsum
 lectus. Pellentesque tempus enim sed leo imperdiet non lobortis nulla
 sollicitudin. Maecenas arcu orci, interdum eu rhoncus ut, blandit id felis.
