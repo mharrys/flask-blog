@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <div class="container">
+    {% block error %}{% endblock %}
+    <a href="{{ url_for('frontend.index') }}" class="button">Back to Blog</a>
+  </div>
+{% endblock %}
