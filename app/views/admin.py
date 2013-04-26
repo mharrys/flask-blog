@@ -36,7 +36,7 @@ def profile():
 def logout():
     """Logout authenticated user."""
     logout_user()
-    return redirect(url_for('frontend.index'))
+    return redirect(url_for('frontend.blog'))
 
 
 @mod.route('/')
