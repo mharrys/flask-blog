@@ -1,8 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Markup
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.login import LoginManager
-from flask.ext.markdown import Markdown
 from flask.ext.sqlalchemy import SQLAlchemy
+from markdown2 import markdown as md2
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -20,7 +20,6 @@ def load_user(id):
 
 
 login_manager.setup_app(app)
-Markdown(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
@@ -104,12 +103,19 @@ def month_name(value):
     return month_name[value]
 
 
+def markdown(value):
+    """Convert plain text to HTML."""
+    extras = ['fenced-code-blocks', 'wiki-tables']
+    return Markup(md2(value, extras=extras))
+
+
 app.jinja_env.filters['date'] = date
 app.jinja_env.filters['date_pretty'] = date_pretty
 app.jinja_env.filters['datetime'] = datetime
 app.jinja_env.filters['timesince'] = timesince
 app.jinja_env.filters['pluralize'] = pluralize
 app.jinja_env.filters['month_name'] = month_name
+app.jinja_env.filters['markdown'] = markdown
 
 
 # Blueprints

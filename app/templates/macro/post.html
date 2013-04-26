@@ -15,7 +15,7 @@
         <span class="right block"><a href="{{ url_for('frontend.detail', slug=post.slug) }}#comments"><span class="iconic comment_fill"></span> {{ num_comments }} Comment{{ num_comments|pluralize }}</a></span>
       #}
     </section>
-    {{ post.body|safe|markdown }}
+    {{ post.body|markdown }}
   </article>
 {% endmacro %}
 

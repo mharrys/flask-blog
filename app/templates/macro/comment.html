@@ -49,7 +49,7 @@
 {% macro render_comment(comment) %}
   <div class="panel">
     <b>{{ comment.name|e }}</b> <i><small>{{ comment.posted|timesince }} ago</small></i>
-    {{ comment.body|safe|markdown }}
+    {{ comment.body|markdown }}
     <a id="reply" href="javascript:void(0)" onclick="$('#{{ comment.id }}').toggle('fast')">Reply</a>
     {{ render_comment_form(form, comment) }}
   </div>
@@ -59,7 +59,7 @@
 {% macro render_comment_admin(comment) %}
   <div class="panel">
     <b>{{ comment.name|e }}</b> <small>({{ comment.ip }}) | {{ comment.posted|datetime }} ({{ comment.posted|timesince }} ago)</small>
-    {{ comment.body|safe|markdown }}
+    {{ comment.body|markdown }}
     <small><a href="{{ url_for('admin.delete_comment', id=comment.id) }}">Delete</a></small>
   </div>
 {% endmacro %}
