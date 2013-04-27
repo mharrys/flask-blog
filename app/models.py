@@ -58,34 +58,48 @@ class User(db.Model, UserMixin):
 
 class PostQuery(BaseQuery):
 
-    def slug(self, slug):
+    def slug(self, slug, show_hidden=False):
         """Return post with specified slug."""
-        return self.filter_by(slug=slug).first()
+        query = self.filter_by(slug=slug)
+        if not show_hidden:
+            query = query.filter_by(visible=True)
+        return query.first()
 
-    def slug_or_404(self, slug):
-        """Return post with specified slug or 404."""
-        return self.filter_by(slug=slug).first_or_404()
+    def slug_or_404(self, slug, show_hidden=False):
+        """Return post with specified slug and visibility or 404."""
+        query = self.filter_by(slug=slug)
+        if not show_hidden:
+            query = query.filter_by(visible=True)
+        return query.first_or_404()
 
-    def date_archive(self):
+    def date_archive(self, show_hidden=False):
         """Return archive where every post is grouped by year and month."""
         year = func.extract('year', Post.published)
         month = func.extract('month', Post.published)
-        return db.session.query(year.label('year'),
-                                month.label('month'),
-                                Post) \
-                         .order_by(year.desc(),
-                                   month.desc(),
-                                   Post.published.desc()) \
-                         .group_by(year, month, Post.title) \
-                         .all()
+        query = db.session.query(year.label('year'),
+                                 month.label('month'),
+                                 Post) \
+                          .order_by(year.desc(),
+                                    month.desc(),
+                                    Post.published.desc()) \
+                          .group_by(year, month, Post.title)
+        if not show_hidden:
+            query = query.filter_by(visible=True)
+        return query.all()
 
-    def filter_by_latest(self):
+    def filter_by_latest(self, show_hidden=False):
         """Return posts ordered by latest first."""
-        return self.order_by(Post.published.desc())
+        query = self.order_by(Post.published.desc())
+        if not show_hidden:
+            query = query.filter_by(visible=True)
+        return query
 
-    def filter_by_oldest(self):
+    def filter_by_oldest(self, show_hidden=False):
         """Return posts ordered by oldest first."""
-        return self.order_by(Post.published)
+        query = self.order_by(Post.published)
+        if not show_hidden:
+            query = query.filter_by(visible=True)
+        return query
 
     def filter_by_title_today(self, title):
         """Return post with slug generated from current time and title."""
@@ -126,24 +140,27 @@ class Post(db.Model):
         cascade="all,delete-orphan",
         backref="post",
     )
+    visible = db.Column(db.Boolean, default=False)
 
-    def __init__(self, title, body, author_id):
+    def __init__(self, title, body, author_id, visible):
         self.published = datetime.utcnow()
         self.edited = self.published
         self.title = title
         self.body = body
         self.slug = slugify(self.published, title)
         self.author_id = author_id
+        self.visible = visible
 
     def __repr__(self):
         return u'<Post(%s,%s,%s)>' % (self.id, self.slug, self.author.name)
 
-    def edit(self, title, body):
+    def edit(self, title, body, visible):
         """Edit post columns."""
         self.edited = datetime.utcnow()
         self.title = title
         self.body = body
         self.slug = slugify(self.published, title)
+        self.visible = visible
 
     @property
     def is_edited(self):

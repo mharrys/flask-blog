@@ -1,10 +1,8 @@
 {% extends "frontend/layout.html" %}
 
 {% block content %}
-  {% from "macro/post.html" import render_post %}
-  {% for post in pagination.items %}
-    {{ render_post(post) }}
-  {% endfor %}
+  {% from "macro/post.html" import render_posts %}
+  {{ render_posts(pagination.items) }}
 
   {% if pagination.has_prev %}
     <a href="{{ url_for('frontend.blog', page=pagination.prev_num) }}" class="button left"><span class="iconic arrow_left" /> Previous</a>

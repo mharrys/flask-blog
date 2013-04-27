@@ -31,7 +31,8 @@ def filldb():
     post = Post(
         title=u'Hello, world!',
         body=POST_1,
-        author_id=admin.id
+        author_id=admin.id,
+        visible=True,
     )
     db.session.add(post)
     db.session.commit()
@@ -41,7 +42,8 @@ def filldb():
     post = Post(
         title=u'Random Words 1',
         body=POST_5,
-        author_id=admin.id
+        author_id=admin.id,
+        visible=True,
     )
     db.session.add(post)
     db.session.commit()
@@ -51,7 +53,8 @@ def filldb():
     post = Post(
         title=u'Random Words 2',
         body=POST_2,
-        author_id=admin.id
+        author_id=admin.id,
+        visible=True,
     )
     db.session.add(post)
     db.session.commit()
@@ -61,21 +64,24 @@ def filldb():
     post = Post(
         title=u'Picture of a cat!',
         body=POST_3,
-        author_id=admin.id
+        author_id=admin.id,
+        visible=True,
     )
     db.session.add(post)
     db.session.commit()
     post = Post(
         title=u'Some code',
         body=POST_4,
-        author_id=admin.id
+        author_id=admin.id,
+        visible=True,
     )
     db.session.add(post)
     db.session.commit()
     post = Post(
         title=u'Random Words 3',
         body=POST_5,
-        author_id=admin.id
+        author_id=admin.id,
+        visible=True,
     )
     db.session.add(post)
     db.session.commit()

@@ -49,6 +49,7 @@ class PostForm(Form):
     prev_title = HiddenField('Previous Title')
     title = TextField('Title', [validators.Required()])
     body = TextAreaField('Body', [validators.Required()])
+    visible = BooleanField('Visible')
 
     def validate_title(form, field):
         title = field.data

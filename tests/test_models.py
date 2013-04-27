@@ -29,9 +29,9 @@ def add_user(name=u'latest_user', pwd=u'pwd'):
     return user
 
 
-def add_post(title=u'latest_title', body=u'body', author_id=1):
+def add_post(title=u'latest_title', body=u'body', author_id=1, visible=True):
     """Add post to database and return its model."""
-    post = Post(title, body, author_id)
+    post = Post(title, body, author_id, visible=visible)
     db.session.add(post)
     db.session.commit()
     return post
@@ -136,13 +136,18 @@ class TestPost(TestModel):
         self.assertEqual(slug, q.slug)
         self.assertEqual(self.author_id, q.author_id)
         # assert unique for same date
-        db.session.add(Post(self.title, self.body, self.author_id))
+        db.session.add(
+            Post(self.title, self.body, self.author_id, visible=True)
+        )
         self.assertRaises(IntegrityError, db_commit)
         # assert not unique for diffrent date
         now = datetime.utcnow()
-        latest_post = Post(self.title, self.body, self.author_id)
+        latest_post = Post(self.title,
+                           self.body,
+                           self.author_id,
+                           visible=True)
         latest_post.published = datetime(now.year - 1, now.month, now.day)
-        latest_post.edit(self.title, self.body)
+        latest_post.edit(self.title, self.body, True)
         db.session.add(latest_post)
         db.session.commit()
 
@@ -179,6 +184,13 @@ class TestPost(TestModel):
         # non existing post
         q = Post.query.slug('unknown')
         self.assertIsNone(q)
+        # assert hidden does not show up
+        latest_post = add_post(visible=False)
+        q = Post.query.slug(latest_post.slug)
+        self.assertIsNone(q)
+        # assert hidden shows up when specified
+        q = Post.query.slug(latest_post.slug, show_hidden=True)
+        self.assertEqual(latest_post.id, q.id)
 
     def test_slug_or_404(self):
         # existing post
@@ -186,6 +198,12 @@ class TestPost(TestModel):
         self.assertEqual(self.post.id, q.id)
         # non existing post
         self.assertRaises(NotFound, Post.query.slug_or_404, u'unknown')
+        # assert hidden does not show up
+        latest_post = add_post(visible=False)
+        self.assertRaises(NotFound, Post.query.slug_or_404, latest_post.slug)
+        # assert hidden shows up when specified
+        q = Post.query.slug_or_404(latest_post.slug, show_hidden=True)
+        self.assertEqual(latest_post.id, q.id)
 
     def test_date_archive(self):
         now = datetime.utcnow()
@@ -195,6 +213,14 @@ class TestPost(TestModel):
         self.assertEqual(now.month, q[0].month)
         # assert first post is included
         self.assertEqual(self.post.id, q[0].Post.id)
+        # assert hidden does not show up
+        self.post.visible = False
+        db.session.commit()
+        q = Post.query.date_archive()
+        self.assertEqual(0, len(q))
+        # assert hidden shows up when specified
+        q = Post.query.date_archive(show_hidden=True)
+        self.assertEqual(1, len(q))
 
     def test_filter_by_latest(self):
         latest_post = add_post()
@@ -202,11 +228,29 @@ class TestPost(TestModel):
         # assert latest post is first in list
         self.assertEqual(latest_post.id, q[0].id)
         self.assertEqual(self.post.id, q[1].id)
+        # assert hidden does not show up
+        latest_post.visible = False
+        db.session.commit()
+        q = Post.query.filter_by_latest().all()
+        self.assertEqual(self.post.id, q[0].id)  # second is now first
+        # assert hidden shows up when specified
+        q = Post.query.filter_by_latest(show_hidden=True).all()
+        self.assertEqual(latest_post.id, q[0].id)
+        self.assertEqual(self.post.id, q[1].id)
 
     def test_filter_by_oldest(self):
         latest_post = add_post()
         q = Post.query.filter_by_oldest().all()
         # assert latest post is last in list
+        self.assertEqual(self.post.id, q[0].id)
+        self.assertEqual(latest_post.id, q[1].id)
+        # assert hidden does not show up
+        self.post.visible = False
+        db.session.commit()
+        q = Post.query.filter_by_oldest().all()
+        self.assertEqual(latest_post.id, q[0].id)  # second is now first
+        # assert hidden shows up when specified
+        q = Post.query.filter_by_oldest(show_hidden=True).all()
         self.assertEqual(self.post.id, q[0].id)
         self.assertEqual(latest_post.id, q[1].id)
 

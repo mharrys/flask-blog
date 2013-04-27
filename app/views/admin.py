@@ -101,7 +101,7 @@ def delete_user(name):
 @login_required
 def posts():
     """View all posts."""
-    archive = Post.query.date_archive()
+    archive = Post.query.date_archive(show_hidden=True)
     return render_template('post/list.html', archive=archive)
 
 
@@ -109,7 +109,7 @@ def posts():
 def posts_by_user(name):
     """View all posts published by specified author."""
     user = User.query.filter_by_name_or_404(name=name)
-    archive = Post.query.date_archive(user.id)
+    archive = Post.query.date_archive(user.id, show_hidden=True)
     return render_template('post/list.html', user=user, archive=archive)
 
 
@@ -119,7 +119,10 @@ def new_post():
     """Add new post."""
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(form.title.data, form.body.data, current_user.id)
+        post = Post(form.title.data,
+                    form.body.data,
+                    current_user.id,
+                    form.visible.data)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('admin.edit_post', slug=post.slug))
@@ -130,10 +133,13 @@ def new_post():
 @login_required
 def edit_post(slug):
     """Edit post with specified slug."""
-    post = Post.query.slug_or_404(slug=slug)
-    form = PostForm(prev_title=post.title, title=post.title, body=post.body)
+    post = Post.query.slug_or_404(slug=slug, show_hidden=True)
+    form = PostForm(prev_title=post.title,
+                    title=post.title,
+                    body=post.body,
+                    visible=post.visible)
     if form.validate_on_submit():
-        post.edit(form.title.data, form.body.data)
+        post.edit(form.title.data, form.body.data, form.visible.data)
         db.session.commit()
     return render_template('post/edit.html', post=post, form=form)
 
@@ -142,7 +148,7 @@ def edit_post(slug):
 @login_required
 def delete_post(slug):
     """Delete post with specified slug."""
-    post = Post.query.slug_or_404(slug=slug)
+    post = Post.query.slug_or_404(slug=slug, show_hidden=True)
     if request.method == 'POST':
         db.session.delete(post)
         db.session.commit()
@@ -159,7 +165,7 @@ def delete_post(slug):
 @login_required
 def post_comments(slug):
     """View comments for specified slug."""
-    post = Post.query.slug_or_404(slug=slug)
+    post = Post.query.slug_or_404(slug=slug, show_hidden=True)
     return render_template('comment/list.html',
                            post=post,
                            comments=post.comments)
