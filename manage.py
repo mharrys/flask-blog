@@ -143,20 +143,19 @@ Etiam rhoncus commodo molestie.
 
 
 POST_4 = u"""
-Testing out highlight.js. Code from highlight test.html.
+How to run a *Hello World* program, code from [Flask](http://flask.pocoo.org).
 
-    @requires_authorization
-    def somefunc(param1='', param2=0):
-        r'''A docstring'''
-        if param1 > param2: # interesting
-            print 'Greater'
-        return (param2 - param1 + 1) or None
+```python
+from flask import Flask
+app = Flask(__name__)
 
-    class SomeClass:
-        pass
+@app.route("/")
+def hello():
+    return "Hello World!"
 
-    >>> message = '''interpreter
-    ... prompt'''
+if __name__ == "__main__":
+    app.run()
+```
 
 Vestibulum a neque sed quam pharetra interdum. Quisque euismod dictum ipsum.
 Vivamus tincidunt mi at tellus pharetra placerat. Sed sed sem nisi, sit amet
