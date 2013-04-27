@@ -2,24 +2,44 @@
 
 Project still in early stages.
 
-## Install
-    git clone https://github.com/mharrys/flask-blog.git
-    cd flask-blog
-    virtualenv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    python manage.py init
+## Install (GNU/Linux)
+
+### Download
+
+    $ git clone https://github.com/mharrys/flask-blog.git
+    $ cd flask-blog
+    
+### Python Packages
+
+Click [here](http://www.pip-installer.org/en/latest/index.html) for more information on using pip and installing a virtual environment.
+
+    $ virtualenv venv
+    $ source venv/bin/activate
+    (venv)$ pip install -r requirements.txt
+    
+### Initialize
+
+The following command will create all tables and fill the database with dummy blog posts.
+
+    (venv)$ python manage.py init
+    
+Additional commands are
+
+    dropdb (Drop all tables in database)
+    initdb (Creates all tables)
+    filldb (Fill database with dummy blog posts)
 
 ## Test
 
 ### Run all tests
-    nosetests
+    (venv)$ nosetests
     
-### Run a specific test (Example)
-    nosetests tests/test_models.py:TestPost.test_filter_by_oldest
-
+### Run a specific test
+    (venv)$ nosetests tests/test_models.py:TestPost.test_filter_by_oldest
+    
 ## Run
-    python manage.py runserver
+
+    (venv)$ python manage.py runserver
 
 Login with **admin** as default username and password.
 
