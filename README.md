@@ -11,7 +11,12 @@ Project still in early stages.
     python manage.py init
 
 ## Test
+
+### Run all tests
     nosetests
+    
+### Run a specific test (Example)
+    nosetests tests/test_models.py:TestPost.test_filter_by_oldest
 
 ## Run
     python manage.py runserver
