@@ -26,7 +26,7 @@ The following command will create all tables and fill the database with dummy bl
 Additional commands are
 
     dropdb (Drop all tables in database)
-    initdb (Creates all tables)
+    initdb (Create all tables)
     filldb (Fill database with dummy blog posts)
 
 ## Test
