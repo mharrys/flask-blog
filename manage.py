@@ -37,7 +37,7 @@ def filldb():
     db.session.add(post)
     db.session.commit()
     post.published = datetime(2011, 06, 13)
-    post.edit(post.title, post.body)
+    post.edit(post.title, post.body, True)
     db.session.commit()
     post = Post(
         title=u'Random Words 1',
@@ -48,7 +48,7 @@ def filldb():
     db.session.add(post)
     db.session.commit()
     post.published = datetime(2012, 8, 15)
-    post.edit(post.title, post.body)
+    post.edit(post.title, post.body, True)
     db.session.commit()
     post = Post(
         title=u'Random Words 2',
@@ -59,7 +59,7 @@ def filldb():
     db.session.add(post)
     db.session.commit()
     post.published = datetime(2012, 12, 24)
-    post.edit(post.title, post.body)
+    post.edit(post.title, post.body, True)
     db.session.commit()
     post = Post(
         title=u'Picture of a cat!',
