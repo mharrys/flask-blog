@@ -1,0 +1,60 @@
+$total-columns: 7
+$column-width: 3em
+$gutter-width: 1em
+$grid-padding: $gutter-width
+
+$break: 12
+
+=one-whole
+  +span-columns($total-columns)
+
+=one-half($last: false)
+  +at-breakpoint($break)
+    @if $last
+      +span-columns(6 omega, 12)
+    @else
+      +span-columns(6, 12)
+    @content
+
+=one-third($last: false)
+  +at-breakpoint($break)
+    @if $last
+      +span-columns(4 omega, 12)
+    @else
+      +span-columns(4, 12)
+    @content
+
+=two-thirds($last: false)
+  +at-breakpoint($break)
+    @if $last
+      +span-columns(8 omega, 12)
+    @else
+      +span-columns(8, 12)
+    @content
+
+=one-quarter($last: false)
+  +at-breakpoint($break)
+    @if $last
+      +span-columns(3 omega, 12)
+    @else
+      +span-columns(3, 12)
+    @content
+
+=two-quarters($last: false)
+  +at-breakpoint($break)
+    @if $last
+      +span-columns(6 omega, 12)
+    @else
+      +span-columns(6, 12)
+    @content
+
+=three-quarters($last: false)
+  +at-breakpoint($break)
+    @if $last
+      +span-columns(9 omega, 12)
+    @else
+      +span-columns(9, 12)
+    @content
+
+.container
+  +container($total-columns, $break)

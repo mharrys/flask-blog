@@ -1,0 +1,81 @@
+=link-one-color($color)
+  color: $color
+  text-decoration: none
+  border-bottom: none
+
+  &:hover, &:focus
+    color: $color
+    text-decoration: none
+    border-bottom: none
+
+  &:active
+    color: $color
+    text-decoration: none
+    border-bottom: none
+
+=link-change-color($normal, $hover, $active)
+  color: $normal
+  text-decoration: none
+  border-bottom: none
+
+  &:hover, &:focus
+    color: $hover
+    text-decoration: none
+    border-bottom: none
+
+  &:active
+    color: $active
+    text-decoration: none
+    border-bottom: none
+
+=link-underlined($normal, $highlight, $border-size)
+  color: $normal
+  text-decoration: none
+  border-bottom: $border-size solid $highlight
+
+  &:hover, &:focus
+    color: $normal
+    text-decoration: none
+    border-bottom: $border-size solid $normal
+
+  &:active
+    color: $normal
+    text-decoration: none
+    border-bottom: $border-size solid $normal
+
+=text-underlined($color, $border-size)
+  color: $color
+  text-decoration: none
+  border-bottom: $border-size solid $color
+
+=anchor
+  a
+    @content
+
+=anchor-heading
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+    a
+      @content
+
+.link-text
+  +link-underlined($black, $brand, 2px)
+
+.link-heading
+  +link-underlined($black, $brand, 4px)
+
+.link-logo
+  +link-change-color($white, $black, $black)
+
+.page-header
+  +text-underlined($black, 4px)
+
++anchor
+  @extend .link-text
+
++anchor-heading
+  @extend .link-heading

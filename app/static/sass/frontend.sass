@@ -1,0 +1,80 @@
+$brand: #20BFD4
+$error: #EE3A37
+
+@import import
+
+header
+  //+debug-vertical-alignment
+
+  +padding-leader(1)
+  +padding-trailer(1)
+
+  text-transform: lowercase
+  text-align: center
+
+  background-color: $brand
+
+  a
+    @extend .link-logo
+
+  h1
+    padding: 0
+    margin: 0
+
+    +adjust-font-size-to($giga)
+    +one-third
+      text-align: left
+
+  nav
+    padding: 0
+    margin: 0
+
+    +adjust-font-size-to($gamma)
+    +two-thirds($last: true)
+      text-align: right
+      +adjust-leading-to(3, $gamma)
+
+    a
+      margin-right: em(10px)
+    a.last
+      margin-right: 0
+
+#content
+  +padding-trailer(2)
+
++sticky-footer(em(60px), "#wrap", "#wrap_footer", "footer")
+
+footer
+  text-align: center
+  background-color: $lightgray
+  // need to wrap border because of the sticky-footer
+  #footer-border
+    border-top: 1px solid $gray
+
+// Experiment
+
+hgroup
+  h1
+    +adjust-font-size-to($gamma)
+    margin-bottom: 0
+    padding-bottom: 0
+  h2
+    margin-top: 0
+    padding-top: 0
+
+#post-date
+  +border-radius(em(2px))
+  display: inline-block
+  float: left
+  padding: em(12.5px)
+  margin-right: em(10px)
+
+  text-align: center
+  text-transform: lowercase
+  font-weight: $bold
+  color: $black
+  background-color: $gray
+  .row
+    padding: 0
+    margin: 0
+    width: 100%
