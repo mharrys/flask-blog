@@ -18,10 +18,12 @@
     </article>
   {% endfor %}
 
-  {% if pagination.has_prev %}
-    <a class="btn btn-disabled" href="{{ url_for('frontend.blog', page=pagination.prev_num) }}">Previous</a>
-  {% endif %}
-  {% if pagination.has_next %}
-    <a class="btn btn-link" href="{{ url_for('frontend.blog', page=pagination.next_num) }}">Next</a>
-  {% endif %}
+  <section id="pagination">
+    {% if pagination.has_prev %}
+      <a id="pagination-prev" href="{{ url_for('frontend.blog', page=pagination.prev_num) }}">Previous</a>
+    {% endif %}
+    {% if pagination.has_next %}
+      <a id="pagination-next" href="{{ url_for('frontend.blog', page=pagination.next_num) }}">Next</a>
+    {% endif %}
+  </section>
 {% endblock %}

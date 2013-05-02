@@ -40,7 +40,21 @@ header
       margin-right: 0
 
 #content
+  @extend .container
   +padding-trailer(2)
+
+#pagination
+  +padding-leader(2)
+
+#pagination-prev,
+#pagination-next
+  @extend .btn
+
+#pagination-prev
+  float: left
+
+#pagination-next
+  float: right
 
 +sticky-footer(em(60px), "#wrap", "#wrap_footer", "footer")
 
