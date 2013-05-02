@@ -1,37 +1,48 @@
 {% extends "base.html" %}
 
+{% block css %}
+  <link rel="stylesheet" href="/static/css/frontend.css">
+{% endblock css %}
+
 {% block body %}
   <div id="wrap">
     <header>
-      <div id="logo">
-        <h1><a href="{{ url_for('frontend.blog') }}"><span class="iconic eye"></span> Flask-Blog</a></h1>
-      </div>
-      <div class="left uppercase">
-        Powered by <a href="http://compass-style.org">Compass</a>, <a href="http://flask.pocoo.org">Flask</a>, <a href="http://somerandomdude.com/work/iconic">Iconic</a>, <a href="http://sass-lang.com">Sass</a>, <a href="http://susy.oddbird.net">Susy</a> and <a href="http://www.vim.org">Vim</a>
-      </div>
-      <div class="right uppercase">
-        <a href="{{ url_for('frontend.archive') }}">Archive</a>
+      <div class="container">
+        <h1>
+          <a href="{{ url_for('frontend.blog') }}">blog</a>
+        </h1>
+        <nav>
+          <a href="{{ url_for('frontend.archive') }}">Archive</a>
+          <a href="#">Tags</a>
+          <a class="last" href="{{ url_for('admin.overview') }}"><i class="icon-signin"></i></a>
+        </nav>
       </div>
     </header>
 
-    <section id="content">
-      {% block content %}{% endblock %}
-    </section>
+    <div class="container">
+      <section id="content">
+        {% block content %}{% endblock %}
+      </section>
+    </div>
 
     <div id="wrap_footer">
     </div>
   </div>
 
   <footer>
-    <section class="container">
-      <div id="about">
-        <h3><span class="iconic user" /> About</h3>
-        I started this project to learn Python and Flask but was also interested to see how much web development has changed since I last coded some PHP back in 2003.
+    <div id="footer-border">
+      <div class="container">
+        <div class="one-whole">
+          <p>
+            This blog is <strong>open source</strong> and available at <a href="https://github.com/mharrys/flask-blog">GitHub <i class="icon-github"></i></a>
+          </p>
+          {#
+          <p>
+            Powered by <a href="http://compass-style.org">Compass</a>, <a href="http://flask.pocoo.org">Flask</a>, <a href="http://sass-lang.com">Sass</a>, <a href="http://susy.oddbird.net">Susy</a> and <a href="http://www.vim.org">Vim</a>
+          </p>
+          #}
+        </div>
       </div>
-      <div id="code">
-        <h3><span class="heart_fill" /> Code</h3>
-        The code is open source and available at <a href="https://github.com/mharrys/flask-blog">GitHub</a>.
-      </div>
-    </section>
+    </div>
   </footer>
 {% endblock %}

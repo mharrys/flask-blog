@@ -1,13 +1,27 @@
 {% extends "frontend/layout.html" %}
 
 {% block content %}
-  {% from "macro/post.html" import render_posts %}
-  {{ render_posts(pagination.items) }}
+  {% for post in pagination.items %}
+    <article>
+    {#
+  <div id="post-date">
+    <div class="row">
+      13
+    </div>
+    <div class="row">
+      Apr
+    </div>
+  </div>
+  #}
+      <h1 class="mega"><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
+      {{ post.body|markdown }}
+    </article>
+  {% endfor %}
 
   {% if pagination.has_prev %}
-    <a href="{{ url_for('frontend.blog', page=pagination.prev_num) }}" class="button left"><span class="iconic arrow_left" /> Previous</a>
+    <a class="btn btn-disabled" href="{{ url_for('frontend.blog', page=pagination.prev_num) }}">Previous</a>
   {% endif %}
   {% if pagination.has_next %}
-    <a href="{{ url_for('frontend.blog', page=pagination.next_num) }}" class="button right">Next <span class="iconic arrow_right" /></a>
+    <a class="btn btn-link" href="{{ url_for('frontend.blog', page=pagination.next_num) }}">Next</a>
   {% endif %}
 {% endblock %}

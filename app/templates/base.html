@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+
   <title>Flask-Blog</title>
-  <link rel="stylesheet" href="/static/css/normalize.css" />
-  <link rel="stylesheet" href="/static/icon/iconic fill/iconic_fill.css" />
-  <link rel="stylesheet" href="/static/css/screen.css" />
+
+  {% block css %}{% endblock %}
 </head>
 <body>
-  {% block body %}{% endblock body %}
+  {% block body %}{% endblock %}
   <script src="/static/js/jquery.min.js"></script>
 </body>
 </html>

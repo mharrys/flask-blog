@@ -1,18 +1,23 @@
 {% extends "frontend/layout.html" %}
 
 {% block content %}
-  {% from "macro/post.html" import render_post %}
-  {{ render_post(post) }}
+  <article>
+    <h1 class="mega"><span class="page-header">{{ post.title|safe }}</span></h1>
+    {{ post.body|markdown }}
+  </article>
 
-  <h2>Post a comment</h2>
-  {% from "macro/comment.html" import render_comment_form with context %}
-  {{ render_comment_form(form) }}
+  {#
+  <section id="post-comment">
+    <h3>Post a comment</h3>
+    {% from "macro/comment.html" import render_comment_form with context %}
+    {{ render_comment_form(form) }}
+  </section>
 
-  <section id="comments">
+  <section id="view-comments">
     {% set num_comments = post.comments|length %}
-    <h2>{{ num_comments }} Comment{{ num_comments|pluralize }}</h2>
-
+    <h3>{{ num_comments }} Comment{{ num_comments|pluralize }}</h3>
     {% from "macro/comment.html" import render_comment_tree, render_comment with context %}
     {{ render_comment_tree(post.comments, render_comment) }}
   </section>
+  #}
 {% endblock %}

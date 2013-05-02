@@ -7,14 +7,7 @@
 
 {% macro render_post(post) %}
   <article>
-    <section id="post-meta">
-      <h1><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
-      <span class="uppercase">{{ post.published|date_pretty }}</span>
-      {#
-        {% set num_comments = post.comments|length %}
-        <span class="right block"><a href="{{ url_for('frontend.detail', slug=post.slug) }}#comments"><span class="iconic comment_fill"></span> {{ num_comments }} Comment{{ num_comments|pluralize }}</a></span>
-      #}
-    </section>
+    <h1 class="mega"><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
     {{ post.body|markdown }}
   </article>
 {% endmacro %}
@@ -69,7 +62,7 @@
     <li><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title }}</a></li>
     {% set num_comments = post.comments|length %}
     {% if num_comments > 0 %}
-      <li><a href="{{ url_for('frontend.detail', slug=post.slug) }}#comments"><span class="iconic comment_fill" /> {{ num_comments }}</a></li>
+      <li><a href="{{ url_for('frontend.detail', slug=post.slug) }}#comments">{{ num_comments }}</a></li>
     {% endif %}
   </ul>
 {% endmacro %}
@@ -81,7 +74,7 @@
     <li><a href="{{ url_for('admin.edit_post', slug=post.slug) }}">{{ post.title }}</a></li>
     {% set num_comments = post.comments|length %}
     {% if num_comments > 0 %}
-      <li><a href="{{ url_for('admin.post_comments', slug=post.slug) }}"><span class="iconic comment_fill" /> {{ num_comments }}</a></li>
+      <li><a href="{{ url_for('admin.post_comments', slug=post.slug) }}">{{ num_comments }}</a></li>
     {% endif %}
   </ul>
 {% endmacro %}
