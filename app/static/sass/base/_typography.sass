@@ -26,6 +26,17 @@ $delta: 20px
 $epsilon: 16px
 $zeta: 14px
 
+=text-underlined($color, $border-size)
+  color: $color
+  text-decoration: none
+  border-bottom: $border-size solid $color
+
+.underlined
+  +text-underlined($black, 2px)
+
+.page-header
+  +text-underlined($black, 4px)
+
 html,
 body
   font-size: 90%

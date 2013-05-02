@@ -43,11 +43,6 @@
     text-decoration: none
     border-bottom: $border-size solid $normal
 
-=text-underlined($color, $border-size)
-  color: $color
-  text-decoration: none
-  border-bottom: $border-size solid $color
-
 =anchor
   a
     @content
@@ -70,9 +65,6 @@
 
 .link-logo
   +link-change-color($white, $black, $black)
-
-.page-header
-  +text-underlined($black, 4px)
 
 +anchor
   @extend .link-text
