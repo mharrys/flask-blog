@@ -1,5 +1,6 @@
 from app.helpers import is_name
 from app.models import Post, User
+from flask.ext.login import current_user
 from flask.ext.wtf import Form, TextField, TextAreaField, validators, \
     ValidationError, HiddenField, PasswordField, BooleanField
 
@@ -27,15 +28,15 @@ class LoginForm(Form):
         return True
 
 
-class EditUserForm(Form):
-    name = TextField('Name', [
+class ChangeUsernameForm(Form):
+    name = TextField('Username', [
         validators.Required(),
         validators.Length(min=2, max=50),
         is_name
     ])
 
 
-class UserForm(EditUserForm):
+class RegisterUserForm(ChangeUsernameForm):
     password = PasswordField('Password', [
         validators.Required(),
         validators.EqualTo('confirm', message='Passwords must match.'),
@@ -43,6 +44,24 @@ class UserForm(EditUserForm):
     confirm = PasswordField('Confirm password', [
         validators.Required(),
     ])
+
+
+class ChangePasswordForm(Form):
+    password = PasswordField('Current Password', [
+        validators.Required()
+    ])
+    new_password = PasswordField('New Password', [
+        validators.Required(),
+        validators.EqualTo('confirm', message='Passwords must match.'),
+    ])
+    confirm = PasswordField('Confirm new password', [
+        validators.Required(),
+    ])
+
+    def validate_password(form, field):
+        password = field.data
+        if not current_user.compare_password(password):
+            raise ValidationError('Wrong password.')
 
 
 class PostForm(Form):

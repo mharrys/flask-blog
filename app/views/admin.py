@@ -1,5 +1,6 @@
 from app import db
-from app.forms import LoginForm, PostForm, EditUserForm, UserForm
+from app.forms import LoginForm, PostForm, ChangeUsernameForm, \
+    RegisterUserForm, ChangePasswordForm
 from app.models import Post, User, Comment
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask.ext.login import login_user, logout_user, current_user, \
@@ -24,11 +25,34 @@ def login():
     return render_template('login.html', form=form)
 
 
-@mod.route('/profile')
+@mod.route('/user/profile')
 @login_required
 def profile():
     """View authenticated user profile."""
     return render_template('user/profile.html', user=current_user)
+
+
+@mod.route('/user/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    """Change password of authenticated user."""
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        current_user.change_password(form.new_password.data)
+        db.session.commit()
+    return render_template('user/change_password.html', form=form)
+
+
+@mod.route('/user/change_username', methods=['GET', 'POST'])
+@login_required
+def change_username():
+    """Change username of authenticated user."""
+    form = ChangeUsernameForm(name=current_user.name)
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        db.session.commit()
+        return redirect(url_for('admin.profile'))
+    return render_template('user/change_name.html', form=form)
 
 
 @mod.route('/logout')
@@ -58,26 +82,13 @@ def users():
 @login_required
 def new_user():
     """Create new user."""
-    form = UserForm()
+    form = RegisterUserForm()
     if form.validate_on_submit():
         user = User(form.name.data, form.password.data)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('admin.users'))
     return render_template('user/new.html', form=form)
-
-
-@mod.route('/users/edit/<name>', methods=['GET', 'POST'])
-@login_required
-def edit_user(name):
-    """Edit user specified by username."""
-    user = User.query.filter_by_name_or_404(name)
-    form = EditUserForm(name=user.name)
-    if form.validate_on_submit():
-        user.name = form.name.data
-        db.session.commit()
-        return redirect(url_for('admin.users'))
-    return render_template('user/edit.html', user=user, form=form)
 
 
 @mod.route('/users/delete/<name>', methods=['GET', 'POST'])
@@ -101,8 +112,8 @@ def delete_user(name):
 @login_required
 def posts():
     """View all posts."""
-    archive = Post.query.date_archive(show_hidden=True)
-    return render_template('post/list.html', archive=archive)
+    posts = Post.query.filter_by_latest(show_hidden=True)
+    return render_template('post/list.html', posts=posts)
 
 
 @mod.route('/posts/user/<name>')

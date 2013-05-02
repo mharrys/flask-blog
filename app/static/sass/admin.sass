@@ -1,4 +1,31 @@
-$brand: #E59850
+$brand: #D06454
 $error: #EE3A37
 
 @import import
+
+header
+  +padding-leader(0.5)
+  +padding-trailer(0.5)
+
+  background-color: $brand
+
+  a
+    @extend .link-logo
+
+  nav
+    font-weight: $bold
+
+    a
+      margin-right: em(10px)
+    a.last
+      margin-right: 0
+
+#menu
+  float: left
+
+#auth
+  float: right
+
+#content
+  @extend .container
+  +padding-trailer(2)

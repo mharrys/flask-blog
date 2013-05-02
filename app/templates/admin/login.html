@@ -1,25 +1,21 @@
 {% extends "base.html" %}
 
-{% block body %}
-  <div id="wrap">
-    <header>
-      <div id="login-logo">
-        <h1><span class="iconic key_fill" /> Admin Login</h1>
-      </div>
-    </header>
+{% block css %}
+  <link rel="stylesheet" href="/static/css/admin.css">
+{% endblock %}
 
+{% block body %}
     <section id="content">
+      <h1 class="mega"><span class="page-header">Admin Login</span></h1>
       {% from "macro/form.html" import render_field, render_button %}
       <form method="post" action="{{ url_for('admin.login') }}">
         {{ form.csrf_token }}
-        {{ render_field(form.username) }}
-        {{ render_field(form.password) }}
-        {{ render_field(form.remember) }}
-        {{ render_button('Login') }}
+        <ul class="form">
+          <li>{{ render_field(form.username) }}</li>
+          <li>{{ render_field(form.password) }}</li>
+          <li class="checkbox">{{ render_field(form.remember) }}</li>
+          <li>{{ render_button('Login') }}</li>
+        </ul>
       </form>
     </section>
-
-    <div id="wrap_footer">
-    </div>
-  </div>
 {% endblock %}

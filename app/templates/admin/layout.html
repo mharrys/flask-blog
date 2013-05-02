@@ -5,16 +5,23 @@
 {% endblock %}
 
 {% block body %}
-  <nav>
-    <section class="items">
-      <a class="item" href="{{ url_for('frontend.blog') }}">Blog</a>
-      <a class="item" href="{{ url_for('admin.overview') }}">Overview</a>
-      <a class="item" href="{{ url_for('admin.users') }}">User</a>
-      <a class="item" href="{{ url_for('admin.posts') }}">Post</a>
-      <a class="right block" href="{{ url_for('admin.logout') }}">Logout</a>
-      <a class="item right block" href="{{ url_for('admin.profile') }}">{{ current_user.name }}</a>
-    </section>
-  </nav>
+  <header>
+    <div class="container">
+      <nav id="menu">
+        <section class="items">
+          <a href="{{ url_for('frontend.blog') }}">Blog</a>
+          <a href="{{ url_for('admin.overview') }}">Overview</a>
+          <a href="{{ url_for('admin.users') }}">User</a>
+          <a href="{{ url_for('admin.posts') }}">Post</a>
+        </section>
+      </nav>
+      <nav id="auth">
+      <a href="{{ url_for('admin.profile') }}"><i class="icon-user"></i></a>
+          <a class="last" href="{{ url_for('admin.logout') }}"><i class="icon-signout"></i></a>
+      </nav>
+    </div>
+  </header>
+
   <section id="content">
     {% block content %}{% endblock %}
   </section>

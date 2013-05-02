@@ -1,14 +1,12 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  <section class="module">
-    <h1>{{ title }}</h1>
-    <p>
-      Are you sure you want to delete <strong>{{ what }}</strong>?
-    </p>
-    {% from "macro/form.html" import render_button_secondary %}
-    <form method="post" action="{{ action }}">
-      {{ render_button_secondary(value="Delete") }}
-    </form>
-  </section>
+  <h1 class="mega"><span class="page-header">{{ title }}</span></h1>
+
+  <p>Are you sure you want to delete <span class="brand">{{ what }}</span>?</p>
+
+  {% from "macro/form.html" import render_button %}
+  <form method="post" action="{{ action }}">
+    {{ render_button(value="Delete") }}
+  </form>
 {% endblock %}

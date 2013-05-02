@@ -5,19 +5,4 @@
     <h1 class="mega"><span class="page-header">{{ post.title|safe }}</span></h1>
     {{ post.body|markdown }}
   </article>
-
-  {#
-  <section id="post-comment">
-    <h3>Post a comment</h3>
-    {% from "macro/comment.html" import render_comment_form with context %}
-    {{ render_comment_form(form) }}
-  </section>
-
-  <section id="view-comments">
-    {% set num_comments = post.comments|length %}
-    <h3>{{ num_comments }} Comment{{ num_comments|pluralize }}</h3>
-    {% from "macro/comment.html" import render_comment_tree, render_comment with context %}
-    {{ render_comment_tree(post.comments, render_comment) }}
-  </section>
-  #}
 {% endblock %}

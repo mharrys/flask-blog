@@ -1,15 +1,15 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  {% set num_users = users.count() %}
-  <h1>{{ num_users }} User{{ num_users|pluralize }}</h1>
+  <h1 class="mega"><span class="page-header">User</h1>
 
-  <a href="{{ url_for('admin.new_user') }}" class="button secondary">New User</a>
+  <a class="btn" href="{{ url_for('admin.new_user') }}">New User</a>
+
+  <h1>User list</h1>
+  {% set num_users = users.count() %}
+  <p><span class="brand">{{ num_users }}</span> registered user{{ num_users|pluralize }}.</p>
 
   {% for user in users %}
-    <section class="panel">
-      <a href="{{ url_for('admin.edit_user', name=user.name) }}">{{ user.name|e }}</a>
-      <a class="right block" href="{{ url_for('admin.delete_user', name=user.name) }}"><span class="iconic x" /></a>
-    </section>
+    <a class="link-color-only" href="{{ url_for('admin.delete_user', name=user.name) }}"><i class="icon-remove"></i></a> {{ user.name|e }}
   {% endfor %}
 {% endblock %}

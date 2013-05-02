@@ -1,5 +1,17 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  <h1>{{ user.name }}</h1>
+  <h1 class="mega"><span class="page-header">Profile</span></h1>
+  {% set num_posts = user.posts|length %}
+
+  <h1>Settings</h1>
+  <p>
+    Your current display name is <span class="brand">{{ user.name }}</span>.
+  </p>
+
+  <a class="btn" href="{{ url_for('admin.change_password') }}"><i class="icon-lock"></i> Change Password</a>
+  <a class="btn" href="{{ url_for('admin.change_username') }}"><i class="icon-credit-card"></i> Change Username</a>
+
+  <h1>Activity</h1>
+  <p>You have published <span class="brand">{{ num_posts }}</span> post{{ num_posts|pluralize }}  since <span class="brand">{{ user.registered|date_pretty }}</span>.</p>
 {% endblock %}

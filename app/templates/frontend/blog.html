@@ -3,16 +3,6 @@
 {% block content %}
   {% for post in pagination.items %}
     <article>
-    {#
-  <div id="post-date">
-    <div class="row">
-      13
-    </div>
-    <div class="row">
-      Apr
-    </div>
-  </div>
-  #}
       <h1 class="mega"><a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
       {{ post.body|markdown }}
     </article>

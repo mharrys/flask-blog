@@ -1,11 +1,14 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  {% set num_posts = archive|length %}
-  <h1>{{ num_posts }} Post{{ num_posts|pluralize }}</h1>
+  <h1 class="mega"><span class="page-header">Post</h1>
 
-  <a href="{{ url_for('admin.new_post') }}" class="button secondary">New Post</a>
+  <a class="btn" href="{{ url_for('admin.new_post') }}">New Post</a>
+
+  <h1>Archive</h1>
+  {% set num_posts = posts.count() %}
+  <p><span class="brand">{{ num_posts }}</span> post{{ num_posts|pluralize }} in the archive.</p>
 
   {% from "macro/post.html" import render_archive, render_archive_post_admin %}
-  {{ render_archive(archive, render_archive_post_admin) }}
+  {{ render_archive(posts, render_archive_post_admin) }}
 {% endblock %}

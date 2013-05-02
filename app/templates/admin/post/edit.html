@@ -1,20 +1,30 @@
 {% extends "admin/layout.html" %}
 
 {% block content %}
-  <h1>Edit Post</h1>
+  <h1 class="mega"><span class="page-header">Edit Post</span></h1>
 
-  <section class="push">
-    <h3>
-      Published {{ post.published|datetime }}
-      {% if post.is_edited %}
-        (Edited {{ post.edited|datetime }})
-      {% endif %}
-    </h3>
-  </section>
+  {% from "macro/form.html" import render_field, render_button %}
+  <form method="post" action="{{ url_for('admin.edit_post', slug=post.slug) }}">
+      {{ form.csrf_token }}
+      {{ render_field(form.prev_title) }}
+      <ul class="form">
+        <li>{{ render_field(form.title) }}</li>
+        <li>{{ render_field(form.body, rows="12") }}</li>
+        <li class="checkbox">{{ render_field(form.visible) }}</li>
+        <li>{{ render_button('Update') }}</li>
+      </ul>
+  </form>
 
-  {% from "macro/post.html" import render_post_form %}
-  {{ render_post_form(form=form, action=url_for('admin.edit_post', slug=post.slug), button_label='Update') }}
+  <h1>Preview</h1>
+  <p>
+    Published <span class="brand">{{ post.published|datetime }}</span>
+    {% if post.is_edited %}
+      (Edited <span class="brand">{{ post.edited|datetime }}</span>)
+    {% endif %}
+  </p>
 
-  {% from "macro/post.html" import render_post %}
-  {{ render_post(post) }}
+  <article>
+    <h1 class="mega"><span class="page-header">{{ post.title|safe }}</span></h1>
+    {{ post.body|markdown }}
+  </article>
 {% endblock %}
