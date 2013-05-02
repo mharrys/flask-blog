@@ -28,17 +28,17 @@ bcrypt = Bcrypt(app)
 
 @app.errorhandler(403)
 def forbidden(e):
-    return render_template('error/403.html'), 403
+    return render_template('frontend/403.html'), 403
 
 
 @app.errorhandler(404)
 def not_found(e):
-    return render_template('error/404.html'), 404
+    return render_template('frontend/404.html'), 404
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('error/500.html'), 500
+    return render_template('frontend/500.html'), 500
 
 
 # Jinja
