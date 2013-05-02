@@ -3,5 +3,5 @@
 {% block content %}
   <h1 class="mega"><span class="page-header">Archive</span></h1>
   {% from "macro/post.html" import render_archive, render_archive_post %}
-  {{ render_archive(archive, render_archive_post) }}
+  {{ render_archive(posts, render_archive_post) }}
 {% endblock %}

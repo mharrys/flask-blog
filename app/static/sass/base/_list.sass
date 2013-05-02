@@ -1,9 +1,17 @@
 ul
+  > li
+    padding-bottom: em(10px)
+  > li:last-child
+    padding-bottom: 0
+
   &.horizontal
     +horizontal-list
 
   &.unstyled
-    list-style: none
+    +no-bullets
+    padding-left: 0
+    ul > li
+      padding-left: em(10px)
 
   &.form
     list-style: none

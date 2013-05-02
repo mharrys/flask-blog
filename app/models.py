@@ -72,21 +72,6 @@ class PostQuery(BaseQuery):
             query = query.filter_by(visible=True)
         return query.first_or_404()
 
-    def date_archive(self, show_hidden=False):
-        """Return archive where every post is grouped by year and month."""
-        year = func.extract('year', Post.published)
-        month = func.extract('month', Post.published)
-        query = db.session.query(year.label('year'),
-                                 month.label('month'),
-                                 Post) \
-                          .order_by(year.desc(),
-                                    month.desc(),
-                                    Post.published.desc()) \
-                          .group_by(year, month, Post.title)
-        if not show_hidden:
-            query = query.filter_by(visible=True)
-        return query.all()
-
     def filter_by_latest(self, show_hidden=False):
         """Return posts ordered by latest first."""
         query = self.order_by(Post.published.desc())

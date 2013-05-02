@@ -22,9 +22,9 @@ def blog(page=1):
 
 @mod.route('/archive')
 def archive():
-    """View full archive."""
-    archive = Post.query.date_archive()
-    return render_template('archive.html', archive=archive)
+    """View an overview of all visible posts."""
+    posts = Post.query.filter_by_latest()
+    return render_template('archive.html', posts=posts)
 
 
 @mod.route('/<path:slug>', methods=['GET', 'POST'])

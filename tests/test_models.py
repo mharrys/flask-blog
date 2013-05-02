@@ -205,23 +205,6 @@ class TestPost(TestModel):
         q = Post.query.slug_or_404(latest_post.slug, show_hidden=True)
         self.assertEqual(latest_post.id, q.id)
 
-    def test_date_archive(self):
-        now = datetime.utcnow()
-        q = Post.query.date_archive()
-        # assert default post is grouped correctly
-        self.assertEqual(now.year, q[0].year)
-        self.assertEqual(now.month, q[0].month)
-        # assert first post is included
-        self.assertEqual(self.post.id, q[0].Post.id)
-        # assert hidden does not show up
-        self.post.visible = False
-        db.session.commit()
-        q = Post.query.date_archive()
-        self.assertEqual(0, len(q))
-        # assert hidden shows up when specified
-        q = Post.query.date_archive(show_hidden=True)
-        self.assertEqual(1, len(q))
-
     def test_filter_by_latest(self):
         latest_post = add_post()
         q = Post.query.filter_by_latest().all()
