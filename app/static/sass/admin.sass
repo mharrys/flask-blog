@@ -31,8 +31,12 @@ header
   +padding-trailer(2)
 
 #login
-  padding: em(40px)
-  padding-top: 0
+  +at-breakpoint($break)
+    +container($total-columns, $break)
 
+#login-content
   background-color: lighten($gray, 8%)
   border: 1px solid $gray
+
+  padding: em(40px)
+  padding-top: 0
