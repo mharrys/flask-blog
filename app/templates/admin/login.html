@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <section id="content">
+  <section id="content">
+    <div id="login">
       <h1 class="mega"><span class="page-header">Admin Login</span></h1>
       {% from "macro/form.html" import render_field, render_button %}
       <form method="post" action="{{ url_for('admin.login') }}">
@@ -17,5 +18,6 @@
           <li>{{ render_button('Login') }}</li>
         </ul>
       </form>
-    </section>
+    </div>
+  </section>
 {% endblock %}
