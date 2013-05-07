@@ -9,7 +9,9 @@
   {% set num_users = users.count() %}
   <p><span class="brand">{{ num_users }}</span> registered user{{ num_users|pluralize }}.</p>
 
-  {% for user in users %}
-    <a class="link-color-only" href="{{ url_for('admin.delete_user', name=user.name) }}"><i class="icon-remove"></i></a> {{ user.name|e }}
-  {% endfor %}
+  <ul class="unstyled">
+    {% for user in users %}
+      <li><a class="link-color-only" href="{{ url_for('admin.delete_user', name=user.name) }}"><i class="icon-remove"></i></a> {{ user.name|e }}</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
