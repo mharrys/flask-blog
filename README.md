@@ -2,7 +2,10 @@
 
 Project still in early stages.
 
-## Install (GNU/Linux)
+Some future plans involves tags, admin roles, public author profile, better comment system and image
+upload.
+
+## Install
 
 ### Download
 
