@@ -9,7 +9,7 @@ upload.
 
 ### Download
 
-    $ git clone https://github.com/mharrys/flask-blog.git
+    $ git clone git://github.com/mharrys/flask-blog.git
     $ cd flask-blog
 
 ### Python Packages
