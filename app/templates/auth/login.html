@@ -1,23 +1,17 @@
-{% extends "base.html" %}
+{% extends "auth/layout.html" %}
 
-{% block css %}
-  <link rel="stylesheet" href="/static/css/admin.css">
-{% endblock %}
-
-{% block body %}
-  <section id="login">
-    <div id="login-content">
-      <h1 class="mega"><span class="page-header">Admin Login</span></h1>
-      {% from "macro/form.html" import render_field, render_button %}
-      <form method="post" action="{{ url_for('auth.login') }}">
-        {{ form.csrf_token }}
-        <ul class="form">
-          <li>{{ render_field(form.username) }}</li>
-          <li>{{ render_field(form.password) }}</li>
-          <li class="checkbox">{{ render_field(form.remember) }}</li>
-          <li>{{ render_button('Login') }}</li>
-        </ul>
-      </form>
-    </div>
-  </section>
+{% block content %}
+  <div id="login">
+    <h1 class="mega"><span class="page-header">Admin Login</span></h1>
+    {% from "macro/form.html" import render_field, render_button %}
+    <form method="post" action="{{ url_for('auth.login') }}">
+      {{ form.csrf_token }}
+      <ul class="form">
+        <li>{{ render_field(form.username) }}</li>
+        <li>{{ render_field(form.password) }}</li>
+        <li class="checkbox">{{ render_field(form.remember) }}</li>
+        <li>{{ render_button('Login') }}</li>
+      </ul>
+    </form>
+  </div>
 {% endblock %}

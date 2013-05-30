@@ -1,7 +1,7 @@
 $brand: #D06454
 $error: #EE3A37
 
-@import import
+@import all
 
 header
   +padding-leader(0.5)
@@ -29,14 +29,3 @@ header
 #content
   @extend .container
   +padding-trailer(2)
-
-#login
-  +at-breakpoint($break)
-    +container($total-columns, $break)
-
-#login-content
-  background-color: lighten($gray, 8%)
-  border: 1px solid $gray
-
-  padding: em(40px)
-  padding-top: 0
