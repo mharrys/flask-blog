@@ -10,7 +10,7 @@ app.config.from_object('config')
 # Extensions
 
 login_manager = LoginManager()
-login_manager.login_view = 'admin.login'
+login_manager.login_view = 'auth.login'
 
 
 @login_manager.user_loader
@@ -120,7 +120,15 @@ app.jinja_env.filters['markdown'] = markdown
 
 # Blueprints
 
-from app.views import admin, frontend
+from app.views import auth, frontend
+
+app.register_blueprint(auth.mod)
+app.register_blueprint(frontend.mod)
+
+from app.views.admin import admin, comment, post, profile, user
 
 app.register_blueprint(admin.mod)
-app.register_blueprint(frontend.mod)
+app.register_blueprint(comment.mod)
+app.register_blueprint(post.mod)
+app.register_blueprint(profile.mod)
+app.register_blueprint(user.mod)

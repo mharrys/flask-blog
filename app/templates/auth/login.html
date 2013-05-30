@@ -9,7 +9,7 @@
     <div id="login-content">
       <h1 class="mega"><span class="page-header">Admin Login</span></h1>
       {% from "macro/form.html" import render_field, render_button %}
-      <form method="post" action="{{ url_for('admin.login') }}">
+      <form method="post" action="{{ url_for('auth.login') }}">
         {{ form.csrf_token }}
         <ul class="form">
           <li>{{ render_field(form.username) }}</li>

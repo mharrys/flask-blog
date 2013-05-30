@@ -3,7 +3,7 @@
 {% block content %}
   <h1 class="mega"><span class="page-header">User</h1>
 
-  <a class="btn" href="{{ url_for('admin.new_user') }}">New User</a>
+  <a class="btn" href="{{ url_for('user.new') }}">New User</a>
 
   <h1>User list</h1>
   {% set num_users = users.count() %}
@@ -11,7 +11,7 @@
 
   <ul class="unstyled">
     {% for user in users %}
-      <li><a class="link-color-only" href="{{ url_for('admin.delete_user', name=user.name) }}"><i class="icon-remove"></i></a> {{ user.name|e }}</li>
+      <li><a class="link-color-only" href="{{ url_for('user.delete', name=user.name) }}"><i class="icon-remove"></i></a> {{ user.name|e }}</li>
     {% endfor %}
   </ul>
 {% endblock %}

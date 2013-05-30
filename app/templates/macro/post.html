@@ -30,11 +30,11 @@
 
 
 {% macro render_archive_post_admin(post) %}
-<a class="link-color-only" href="{{ url_for('admin.delete_post', slug=post.slug) }}"><i class="icon-remove"></i></a>
+<a class="link-color-only" href="{{ url_for('post.delete', slug=post.slug) }}"><i class="icon-remove"></i></a>
 
 {% if not post.visible %}
 <i class="icon-eye-close"></i>
 {% endif %}
 
-<a href="{{ url_for('admin.edit_post', slug=post.slug) }}">{{ post.title }}</a>
+<a href="{{ url_for('post.edit', slug=post.slug) }}">{{ post.title }}</a>
 {% endmacro %}

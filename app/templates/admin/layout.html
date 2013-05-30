@@ -11,13 +11,13 @@
         <section class="items">
           <a href="{{ url_for('frontend.blog') }}">Blog</a>
           <a href="{{ url_for('admin.overview') }}">Overview</a>
-          <a href="{{ url_for('admin.users') }}">User</a>
-          <a href="{{ url_for('admin.posts') }}">Post</a>
+          <a href="{{ url_for('user.overview') }}">User</a>
+          <a href="{{ url_for('post.overview') }}">Post</a>
         </section>
       </nav>
       <nav id="auth">
-      <a href="{{ url_for('admin.profile') }}"><i class="icon-user"></i></a>
-          <a class="last" href="{{ url_for('admin.logout') }}"><i class="icon-signout"></i></a>
+      <a href="{{ url_for('profile.view') }}"><i class="icon-user"></i></a>
+          <a class="last" href="{{ url_for('auth.logout') }}"><i class="icon-signout"></i></a>
       </nav>
     </div>
   </header>

@@ -4,7 +4,7 @@
   <h1 class="mega"><span class="page-header">Edit Post</span></h1>
 
   {% from "macro/form.html" import render_field, render_button %}
-  <form method="post" action="{{ url_for('admin.edit_post', slug=post.slug) }}">
+  <form method="post" action="{{ url_for('post.edit', slug=post.slug) }}">
       {{ form.csrf_token }}
       {{ render_field(form.prev_title) }}
       <ul class="form">
