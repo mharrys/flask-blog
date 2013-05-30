@@ -1,26 +1,28 @@
 {% macro render_archive(posts, macro_post_render) %}
-  <ul class="unstyled">
-    {% for post in posts %}
-      {% set ny = post.published.year %}
-      {% set nm = post.published.month %}
-      {# render only year and month combination once #}
-      {% if loop.first or (ny != y and nm != m) %}
-        {% set y = ny %}
-        {% set m = nm %}
-        <li>
-          <h1>{{ y }} {{ m|month_name }}</h1>
-          {# render all posts in this year and month #}
-          <ul>
-            {% for post in posts if post.published.year == y and post.published.month == m %}
-              <li>
-                {{ macro_post_render(post) }}
-              </li>
-            {% endfor %}
-          </ul>
-        </li>
-      {% endif %}
-    {% endfor %}
-  </ul>
+  {% if posts %}
+    <ul class="unstyled">
+      {% for post in posts %}
+        {% set y = post.published.year %}
+        {% set m = post.published.month %}
+        {% if loop.first or (y != prev_y or m != prev_m) %}
+          <li>
+            <h1>{{ y }} {{ m|month_name }}</h1>
+            <ul>
+              {% for post in posts if post.published.year == y and post.published.month == m %}
+                <li>
+                  {{ macro_post_render(post) }}
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% set prev_y = y %}
+          {% set prev_m = m %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Empty.</p>
+  {% endif %}
 {% endmacro %}
 
 
@@ -30,11 +32,9 @@
 
 
 {% macro render_archive_post_admin(post) %}
-<a class="link-color-only" href="{{ url_for('post.delete', slug=post.slug) }}"><i class="icon-remove"></i></a>
-
-{% if not post.visible %}
-<i class="icon-eye-close"></i>
-{% endif %}
-
-<a href="{{ url_for('post.edit', slug=post.slug) }}">{{ post.title }}</a>
+  <a class="link-color-only" href="{{ url_for('post.delete', slug=post.slug) }}"><i class="icon-remove"></i></a>
+  {% if not post.visible %}
+    <i class="icon-eye-close"></i>
+  {% endif %}
+  <a href="{{ url_for('post.edit', slug=post.slug) }}">{{ post.title }}</a>
 {% endmacro %}
