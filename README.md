@@ -1,8 +1,6 @@
 # Flask-Blog
 
-Project still in early stages.
-
-Some future plans involves tags, admin roles, public author profile, better comment system and image
+Project still in early stages. Some future plans involves tags, admin roles, test for views, public author profile, syntax highlighting for code snippets, better comment system and image
 upload.
 
 ## Install
