@@ -105,9 +105,4 @@ app.jinja_env.filters['pluralize'] = pluralize
 app.jinja_env.filters['month_name'] = month_name
 app.jinja_env.filters['markdown'] = markdown
 
-
-# Blueprints
-
-from app.views import frontend
-
-app.register_blueprint(frontend.mod)
+from app import views

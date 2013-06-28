@@ -27,7 +27,7 @@
 
 
 {% macro render_archive_post(post) %}
-  <a href="{{ url_for('frontend.detail', slug=post.slug) }}">{{ post.title }}</a>
+  <a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title }}</a>
 {% endmacro %}
 
 
