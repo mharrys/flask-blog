@@ -55,6 +55,15 @@ class User(db.Model, UserMixin):
         """Change current password to a new password."""
         self.password_hash = bcrypt.generate_password_hash(password)
 
+    def to_json(self):
+        """Return this class JSON serialized. Only public params."""
+        return {
+            'id': self.id,
+            'registered': self.registered.isoformat(),
+            'name': self.name,
+            'posts_url': '/api/users/%s/posts' % self.name,
+        }
+
 
 class PostQuery(BaseQuery):
 
@@ -151,6 +160,19 @@ class Post(db.Model):
     def is_edited(self):
         """Validate if this post has been edited since published."""
         return self.edited > self.published
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'published': self.published.isoformat(),
+            'edited': self.edited.isoformat(),
+            'title': self.title,
+            'body': self.body,
+            'slug': self.slug,
+            'author': self.author,
+            'comments_url': '/api/posts/%s/comments' % self.slug,
+            'visible': self.visible,
+        }
 
 
 class CommentQuery(BaseQuery):
