@@ -167,7 +167,7 @@ class Post(db.Model):
             'published': self.published.isoformat(),
             'edited': self.edited.isoformat(),
             'title': self.title,
-            'body': self.body,
+            'markup': self.body,
             'slug': self.slug,
             'author': self.author.name,
             'author_id': self.author_id,
