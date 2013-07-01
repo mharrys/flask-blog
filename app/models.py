@@ -169,7 +169,7 @@ class Post(db.Model):
             'title': self.title,
             'body': self.body,
             'slug': self.slug,
-            'author': self.author,
+            'author': self.author.name,
             'comments_url': '/api/posts/%s/comments' % self.slug,
             'visible': self.visible,
         }
