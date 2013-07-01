@@ -61,7 +61,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'registered': self.registered.isoformat(),
             'name': self.name,
-            'posts_url': '/api/users/%s/posts' % self.name,
+            'posts_url': '/api/users/%s/posts' % self.id,
         }
 
 
@@ -170,7 +170,7 @@ class Post(db.Model):
             'body': self.body,
             'slug': self.slug,
             'author': self.author.name,
-            'comments_url': '/api/posts/%s/comments' % self.slug,
+            'comments_url': '/api/posts/%s/comments' % self.id,
             'visible': self.visible,
         }
 
