@@ -1,9 +1,0 @@
-{% extends "admin/layout.html" %}
-
-{% block content %}
-  {% set num_comments = post.comments|length %}
-  <h2>{{ num_comments }} Comment{{ num_comments|pluralize }} for <q>{{ post.title }}</q></h2>
-
-  {% from "macro/comment.html" import render_comment_tree, render_comment_admin %}
-  {{ render_comment_tree(post.comments, render_comment_admin) }}
-{% endblock %}
