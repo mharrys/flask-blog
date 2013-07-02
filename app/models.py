@@ -1,11 +1,10 @@
 from datetime import datetime
-from flask.ext.login import UserMixin
 
 from app import db, bcrypt
 from app.helpers import slugify
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     registered = db.Column(db.DateTime, default=datetime.utcnow)
     name = db.Column(db.String(50), nullable=False, unique=True)
