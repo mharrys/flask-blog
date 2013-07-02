@@ -1,9 +1,10 @@
-from app import db, bcrypt
-from app.helpers import slugify
 from datetime import datetime
 from flask.ext.login import UserMixin
 from flask.ext.sqlalchemy import BaseQuery
 from sqlalchemy import and_, func
+
+from app import db, bcrypt
+from app.helpers import slugify
 
 
 class UserQuery(BaseQuery):
