@@ -1,6 +1,7 @@
+from flask import render_template, send_file
+
 from app import app
 from app.models import Post
-from flask import render_template
 
 
 @app.route('/')
@@ -28,3 +29,8 @@ def detail(slug):
     post = Post.query.filter_by(visible=True, slug=slug) \
                      .first_or_404()
     return render_template('detail.html', post=post)
+
+
+@app.route('/admin')
+def admin():
+    return send_file('static/admin-panel/app/index.html')
