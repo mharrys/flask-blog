@@ -2,6 +2,7 @@ import re
 import unidecode
 
 from datetime import datetime
+
 from flask.ext.wtf import regexp
 
 is_name = regexp(
