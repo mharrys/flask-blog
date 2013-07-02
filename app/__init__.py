@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Markup
+from flask import Flask, Markup
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.sqlalchemy import SQLAlchemy
 from markdown2 import markdown as md2
@@ -10,23 +10,6 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-
-
-# Errors
-
-@app.errorhandler(403)
-def forbidden(e):
-    return render_template('frontend/403.html'), 403
-
-
-@app.errorhandler(404)
-def not_found(e):
-    return render_template('frontend/404.html'), 404
-
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('frontend/500.html'), 500
 
 
 # Jinja
