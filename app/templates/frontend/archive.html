@@ -2,6 +2,28 @@
 
 {% block content %}
   <h1 class="mega"><span class="page-header">Archive</span></h1>
-  {% from "macro/post.html" import render_archive, render_archive_post %}
-  {{ render_archive(posts, render_archive_post) }}
+  {% if posts %}
+    <ul class="unstyled">
+      {% for post in posts %}
+        {% set y = post.published.year %}
+        {% set m = post.published.month %}
+        {% if loop.first or (y != prev_y or m != prev_m) %}
+          <li>
+            <h1>{{ y }} {{ m|month_name }}</h1>
+            <ul>
+              {% for post in posts if post.published.year == y and post.published.month == m %}
+                <li>
+                  <a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% set prev_y = y %}
+          {% set prev_m = m %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Empty.</p>
+  {% endif %}
 {% endblock %}
