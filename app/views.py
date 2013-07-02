@@ -7,21 +7,24 @@ from flask import render_template
 @app.route('/page/<int:page>')
 def blog(page=1):
     """View the blog."""
-    posts = Post.query.filter_by_latest()
+    posts = Post.query.filter_by(visible=True) \
+                      .order_by(Post.published.desc())
     if posts:
         pagination = posts.paginate(page=page, per_page=Post.PER_PAGE)
-    return render_template('frontend/blog.html', pagination=pagination)
+    return render_template('blog.html', pagination=pagination)
 
 
 @app.route('/archive')
 def archive():
     """View an overview of all visible posts."""
-    posts = Post.query.filter_by_latest()
-    return render_template('frontend/archive.html', posts=posts)
+    posts = Post.query.filter_by(visible=True) \
+                      .order_by(Post.published.desc())
+    return render_template('archive.html', posts=posts)
 
 
 @app.route('/<path:slug>', methods=['GET', 'POST'])
 def detail(slug):
     """View details of post with specified slug."""
-    post = Post.query.slug_or_404(slug)
-    return render_template('frontend/detail.html', post=post)
+    post = Post.query.filter_by(visible=True, slug=slug) \
+                     .first_or_404()
+    return render_template('detail.html', post=post)
