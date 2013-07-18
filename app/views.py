@@ -23,10 +23,9 @@ def internal_server_error(e):
 @app.route('/page/<int:page>')
 def blog(page=1):
     """View the blog."""
-    posts = Post.query.filter_by(visible=True) \
-                      .order_by(Post.published.desc())
-    if posts:
-        pagination = posts.paginate(page=page, per_page=Post.PER_PAGE)
+    pagination = Post.query.filter_by(visible=True) \
+                           .order_by(Post.published.desc()) \
+                           .paginate(page, Post.PER_PAGE, False)
     return render_template('blog.html', pagination=pagination)
 
 
