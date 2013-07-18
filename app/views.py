@@ -48,4 +48,4 @@ def detail(slug):
 
 @app.route('/admin')
 def admin():
-    return send_file('static/admin-panel/app/index.html')
+    return send_file('static/admin/index.html')
