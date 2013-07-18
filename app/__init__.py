@@ -89,3 +89,8 @@ app.jinja_env.filters['month_name'] = month_name
 app.jinja_env.filters['markdown'] = markdown
 
 from app import views
+from app.api import auth, users, posts
+
+app.register_blueprint(auth.bp)
+app.register_blueprint(users.bp)
+app.register_blueprint(posts.bp)
