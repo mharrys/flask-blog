@@ -1,5 +1,4 @@
 from flask import Flask, Markup
-from flask.ext.bcrypt import Bcrypt
 from flask.ext.sqlalchemy import SQLAlchemy
 from markdown2 import markdown as md2
 
@@ -9,7 +8,6 @@ app.config.from_object('config')
 # Extensions
 
 db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
 
 
 # Jinja

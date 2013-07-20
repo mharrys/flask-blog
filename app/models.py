@@ -1,6 +1,8 @@
 from datetime import datetime
 
-from app import db, bcrypt
+from flask.ext.bcrypt import generate_password_hash, check_password_hash
+
+from app import db
 from app.helpers import slugify
 
 
@@ -26,11 +28,11 @@ class User(db.Model):
 
     def compare_password(self, password):
         """Compare password against stored password hash."""
-        return bcrypt.check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password_hash, password)
 
     def change_password(self, password):
         """Change current password to a new password."""
-        self.password_hash = bcrypt.generate_password_hash(password, 6)
+        self.password_hash = generate_password_hash(password, 6)
 
     def to_json(self):
         """Return this class JSON serialized. Only public params."""
