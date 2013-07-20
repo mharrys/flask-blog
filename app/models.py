@@ -30,7 +30,7 @@ class User(db.Model):
 
     def change_password(self, password):
         """Change current password to a new password."""
-        self.password_hash = bcrypt.generate_password_hash(password)
+        self.password_hash = bcrypt.generate_password_hash(password, 6)
 
     def to_json(self):
         """Return this class JSON serialized. Only public params."""
