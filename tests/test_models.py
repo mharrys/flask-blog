@@ -5,7 +5,6 @@ from app.helpers import slugify
 from app.models import User, Post, Comment
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import NotFound
 
 app.config['TESTING'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
@@ -66,63 +65,6 @@ class TestModel(unittest.TestCase):
         db.drop_all()
 
 
-class TestUser(TestModel):
-
-    def test_create(self):
-        # assert default user was added
-        self.assertEqual(1, len(User.query.all()))
-        # assert correct name and password
-        q = User.query.filter_by_name(self.name)
-        self.assertEqual(self.name, q.name)
-        self.assertTrue(q.compare_password(self.pwd))
-        # assert unique
-        db.session.add(User(self.name, self.pwd))
-        self.assertRaises(IntegrityError, db_commit)
-
-    def test_change_password(self):
-        # assert current password is used
-        q = User.query.filter_by_name(self.name)
-        self.assertTrue(q.compare_password(self.pwd))
-        # update database with new user password
-        new_pwd = 'new_pwd'
-        q.change_password(new_pwd)
-        db.session.commit()
-        # assert new password is set
-        q = User.query.filter_by_name(self.name)
-        self.assertTrue(q.compare_password(new_pwd))
-
-    def test_filter_by_name(self):
-        # existing user
-        q = User.query.filter_by_name(self.name)
-        self.assertEqual(self.user.id, q.id)
-        # non existing user
-        q = User.query.filter_by_name(u'unknown')
-        self.assertIsNone(q)
-
-    def test_filter_by_name_or_404(self):
-        # existing user
-        q = User.query.filter_by_name_or_404(self.name)
-        self.assertEqual(self.user.id, q.id)
-        # non existing user
-        self.assertRaises(NotFound,
-                          User.query.filter_by_name_or_404,
-                          u'unknown')
-
-    def test_filter_by_latest(self):
-        latest_user = add_user()
-        q = User.query.filter_by_latest().all()
-        # assert latest user is first in list
-        self.assertEqual(latest_user.id, q[0].id)
-        self.assertEqual(self.user.id, q[1].id)
-
-    def test_filter_by_oldest(self):
-        latest_user = add_user()
-        q = User.query.filter_by_oldest().all()
-        # assert latest user is last in list
-        self.assertEqual(self.user.id, q[0].id)
-        self.assertEqual(latest_user.id, q[1].id)
-
-
 class TestPost(TestModel):
 
     def test_create(self):
@@ -177,86 +119,6 @@ class TestPost(TestModel):
         db.session.commit()
         self.assertEqual(0, len(Post.query.all()))
 
-    def test_slug(self):
-        # existing post
-        q = Post.query.slug(self.post.slug)
-        self.assertEqual(self.post.id, q.id)
-        # non existing post
-        q = Post.query.slug('unknown')
-        self.assertIsNone(q)
-        # assert hidden does not show up
-        latest_post = add_post(visible=False)
-        q = Post.query.slug(latest_post.slug)
-        self.assertIsNone(q)
-        # assert hidden shows up when specified
-        q = Post.query.slug(latest_post.slug, show_hidden=True)
-        self.assertEqual(latest_post.id, q.id)
-
-    def test_slug_or_404(self):
-        # existing post
-        q = Post.query.slug_or_404(self.post.slug)
-        self.assertEqual(self.post.id, q.id)
-        # non existing post
-        self.assertRaises(NotFound, Post.query.slug_or_404, u'unknown')
-        # assert hidden does not show up
-        latest_post = add_post(visible=False)
-        self.assertRaises(NotFound, Post.query.slug_or_404, latest_post.slug)
-        # assert hidden shows up when specified
-        q = Post.query.slug_or_404(latest_post.slug, show_hidden=True)
-        self.assertEqual(latest_post.id, q.id)
-
-    def test_filter_by_latest(self):
-        latest_post = add_post()
-        q = Post.query.filter_by_latest().all()
-        # assert latest post is first in list
-        self.assertEqual(latest_post.id, q[0].id)
-        self.assertEqual(self.post.id, q[1].id)
-        # assert hidden does not show up
-        latest_post.visible = False
-        db.session.commit()
-        q = Post.query.filter_by_latest().all()
-        self.assertEqual(self.post.id, q[0].id)  # second is now first
-        # assert hidden shows up when specified
-        q = Post.query.filter_by_latest(show_hidden=True).all()
-        self.assertEqual(latest_post.id, q[0].id)
-        self.assertEqual(self.post.id, q[1].id)
-
-    def test_filter_by_oldest(self):
-        latest_post = add_post()
-        q = Post.query.filter_by_oldest().all()
-        # assert latest post is last in list
-        self.assertEqual(self.post.id, q[0].id)
-        self.assertEqual(latest_post.id, q[1].id)
-        # assert hidden does not show up
-        self.post.visible = False
-        db.session.commit()
-        q = Post.query.filter_by_oldest().all()
-        self.assertEqual(latest_post.id, q[0].id)  # second is now first
-        # assert hidden shows up when specified
-        q = Post.query.filter_by_oldest(show_hidden=True).all()
-        self.assertEqual(self.post.id, q[0].id)
-        self.assertEqual(latest_post.id, q[1].id)
-
-    def test_filter_by_title_today(self):
-        q = Post.query.filter_by_title_today(self.post.title)
-        self.assertEqual(self.post.id, q.id)
-
-    def test_filter_by_date(self):
-        # assert all parameters gives default post
-        now = datetime.utcnow()
-        q = Post.query.filter_by_date(now.year).first()
-        self.assertEqual(self.post.id, q.id)
-        q = Post.query.filter_by_date(now.year, now.month).first()
-        self.assertEqual(self.post.id, q.id)
-        q = Post.query.filter_by_date(now.year, now.month, now.day).first()
-        self.assertEqual(self.post.id, q.id)
-        # all existing
-        q = Post.query.filter_by_date()
-        self.assertEqual(1, q.count())
-        # non existing
-        q = Post.query.filter_by_date(now.year - 1).first()
-        self.assertIsNone(q)
-
 
 class TestComment(TestModel):
 
@@ -284,36 +146,6 @@ class TestComment(TestModel):
         db.session.delete(self.comment)
         db.session.commit()
         self.assertEqual(0, len(Comment.query.all()))
-
-    def test_filter_by_name(self):
-        # existing comment
-        q = Comment.query.filter_by_name(self.name)
-        self.assertEqual(self.comment.id, q.id)
-        # non existing comment
-        q = Comment.query.filter_by_name(u'unknown')
-        self.assertIsNone(q)
-
-    def test_filter_by_ip(self):
-        # existing comment
-        q = Comment.query.filter_by_ip(IP)
-        self.assertEqual(self.comment.id, q.id)
-        # non existing comment
-        q = Comment.query.filter_by_name(u'unknown')
-        self.assertIsNone(q)
-
-    def test_filter_by_latest(self):
-        latest_comment = add_comment()
-        q = Comment.query.filter_by_latest().all()
-        # assert latest comment is first in list
-        self.assertEqual(latest_comment.id, q[0].id)
-        self.assertEqual(self.comment.id, q[1].id)
-
-    def test_filter_by_oldest(self):
-        latest_comment = add_comment()
-        q = Comment.query.filter_by_oldest().all()
-        # assert latest comment is last in list
-        self.assertEqual(self.comment.id, q[0].id)
-        self.assertEqual(latest_comment.id, q[1].id)
 
     def test_is_root(self):
         # assert default comment is root (not a comment reply)
