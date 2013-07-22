@@ -36,7 +36,7 @@ Additional commands are
     (venv)$ nosetests
 
 ### Run a specific test
-    (venv)$ nosetests tests/test_models.py:TestPost.test_filter_by_oldest
+    (venv)$ nosetests tests/test_filters.py:TestFilters.test_pluralize
 
 ## Run
 
