@@ -1,4 +1,4 @@
-from flask import render_template, send_file
+from flask import render_template
 
 from app import app
 from app.models import Post
@@ -47,4 +47,4 @@ def detail(slug):
 
 @app.route('/admin')
 def admin():
-    return send_file('static/admin/index.html')
+    return render_template('admin.html')
