@@ -87,6 +87,16 @@ class Post(db.Model):
         self.slug = slugify(self.published, title)
         self.visible = visible
 
+    def change_title(self, title):
+        """Change title.
+
+        The post slug will be updated for the new title with the date the post
+        was published.
+
+        """
+        self.title = title
+        self.slug = slugify(self.published, title)
+
     @property
     def is_edited(self):
         """Validate if this post has been edited since published."""
