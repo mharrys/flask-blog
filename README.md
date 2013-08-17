@@ -10,7 +10,14 @@ The blog is still written like any traditional Flask application without any nee
 
 Some future plans involves tags, admin roles, test for views, public author profile, syntax highlighting for code snippets, better comment system and image upload.
 
-Its known that the dates are displayed wrong in the administration application for SQLite.
+## Demo
+
+There is a demo available using the configuration files located in the server folder. The server is using [nignx](http://nginx.org/), [gunicorn](http://gunicorn.org/), [supervisor](http://supervisord.org/) and [postgresql](http://www.postgresql.org/). View the HTTP version or HTTPS version (will give a warning since its a self-signed SSL certificate).
+
+The site is hopefully in read-only mode.
+
++ [HTTP Demo](http://flask-blog.trixz.se/) 
++ [HTTPS Demo](https://flask-blog.trixz.se/)
 
 ## Install
 
