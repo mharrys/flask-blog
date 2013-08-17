@@ -18,6 +18,12 @@ Its known that the dates are displayed wrong in the administration application f
 
     $ git clone git://github.com/mharrys/flask-blog.git
     $ cd flask-blog
+    
+### OS Packages
+
+You will at least need the python development package though there might be more packages required depending on your setup.
+
+    $ sudo apt-get install python-dev
 
 ### Python Packages
 
