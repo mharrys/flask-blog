@@ -55,7 +55,7 @@ def list_posts():
     title = parse_arg(request.args, str, 'title', '')
     title_sql = title.replace(' ', '%')
 
-    pag = Post.query.filter(Post.title.like('%' + title_sql + '%')) \
+    pag = Post.query.filter(Post.title.ilike('%' + title_sql + '%')) \
                     .order_by(sql_ordering(order_by)) \
                     .paginate(page, per_page, False)
 

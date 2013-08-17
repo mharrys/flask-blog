@@ -55,7 +55,7 @@ def list_users():
     name = parse_arg(request.args, str, 'name', '')
     name_sql = name.replace(' ', '%')
 
-    pag = User.query.filter(User.name.like('%' + name_sql + '%')) \
+    pag = User.query.filter(User.name.ilike('%' + name_sql + '%')) \
                     .order_by(sql_ordering(order_by)) \
                     .paginate(page, per_page, False)
 
