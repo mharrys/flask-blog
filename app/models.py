@@ -1,14 +1,12 @@
-from datetime import datetime
-
 from flask.ext.bcrypt import generate_password_hash, check_password_hash
 
 from app import db
-from app.helpers import slugify
+from app.helpers import slugify, utcnow
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    registered = db.Column(db.DateTime, default=datetime.utcnow)
+    registered = db.Column(db.DateTime, default=utcnow)
     name = db.Column(db.String(50), nullable=False, unique=True)
     password_hash = db.Column(db.String(60))
     posts = db.relationship(
@@ -68,7 +66,7 @@ class Post(db.Model):
     visible = db.Column(db.Boolean, default=False)
 
     def __init__(self, title, body, author_id, visible):
-        self.published = datetime.utcnow()
+        self.published = utcnow()
         self.edited = self.published
         self.title = title
         self.body = body
@@ -81,7 +79,7 @@ class Post(db.Model):
 
     def edit(self, title, body, visible):
         """Edit post columns."""
-        self.edited = datetime.utcnow()
+        self.edited = utcnow()
         self.title = title
         self.body = body
         self.slug = slugify(self.published, title)
@@ -119,7 +117,7 @@ class Post(db.Model):
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    posted = db.Column(db.DateTime, default=datetime.utcnow)
+    posted = db.Column(db.DateTime, default=utcnow)
     name = db.Column(db.String(50), nullable=False)
     body = db.Column(db.String(510), nullable=False)
     ip = db.Column(db.String(45), nullable=False)
