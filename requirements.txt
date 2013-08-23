@@ -9,5 +9,8 @@ markdown2==2.1.0
 Pygments==1.6
 gunicorn==17.5
 
+# For handling timezone, has no effect in SQLite3, use postgresql
+pytz>=2013b
+
 # For usage with postgresql, libpq-dev required (Debian)
 # psycopg2==2.5.1
