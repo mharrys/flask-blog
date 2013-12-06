@@ -1,19 +1,32 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  {% for post in pagination.items %}
-    <article>
-      <h1 class="mega"><a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
-      {{ post.body|markdown }}
-    </article>
-  {% endfor %}
+  <div class="row">
+    {% for post in pagination.items %}
+        <div class="col-lg-12">
+          <div id="post-headline">
+            <h1><a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
+          </div>
+          <div id="post-meta">
+            <p>Posted on {{ post.published }}</p>
+          </div>
+          <div id="post-body">
+            {{ post.body|markdown }}
+          </div>
+        </div>
+    {% endfor %}
+  </div>
 
-  <section id="pagination">
-    {% if pagination.has_prev %}
-      <a id="pagination-prev" href="{{ url_for('blog', page=pagination.prev_num) }}">Previous</a>
-    {% endif %}
-    {% if pagination.has_next %}
-      <a id="pagination-next" href="{{ url_for('blog', page=pagination.next_num) }}">Next</a>
-    {% endif %}
-  </section>
+  <div class="row">
+    <div class="col-lg-12">
+      {% if pagination.has_prev %}
+          <a class="btn btn-default" href="{{ url_for('blog', page=pagination.prev_num) }}">Previous</a>
+      {% endif %}
+      {% if pagination.has_next %}
+          <div class="pull-right">
+            <a class="btn btn-default" href="{{ url_for('blog', page=pagination.next_num) }}">Next</a>
+          </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

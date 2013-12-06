@@ -1,0 +1,23 @@
+#content {
+  margin-bottom: 30px;
+}
+#post-headline a {
+  color: #333;
+}
+#post-headline a:active {
+  color: #333;
+}
+#post-meta {
+}
+#post-body {
+  padding: 15px 0;
+}
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+img {
+  width: 100%;
+  border-radius: 8px;
+}

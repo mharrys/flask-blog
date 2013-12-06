@@ -1,8 +1,17 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <article>
-    <h1 class="mega"><span class="page-header">{{ post.title|safe }}</span></h1>
-    {{ post.body|markdown }}
-  </article>
+  <div class="row">
+    <div class="col-lg-12">
+      <div>
+        <h1>{{ post.title|safe }}</h1>
+      </div>
+      <div id="post-meta">
+        <p>Posted on {{ post.published }}</p>
+      </div>
+      <div id="post-body">
+        {{ post.body|markdown }}
+      </div>
+    </div>
+  </div>
 {% endblock %}
