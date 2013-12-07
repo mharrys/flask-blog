@@ -63,16 +63,8 @@ def detail(slug):
 
 @app.route('/admin')
 def admin():
-    """Show admin page.
-
-    The usage of the admin page requires valid authorization.
-    Javascript must be enabled but no cookies are required.
-
-    Warning!
-    The authorization is over HTTP Basic and should only be used with SSL.
-
-    """
-    return render_template('admin.html')
+    """Show admin overview page."""
+    return render_template('admin/overview.html')
 
 
 @app.route('/auth/login')
