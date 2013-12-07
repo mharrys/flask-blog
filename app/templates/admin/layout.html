@@ -18,21 +18,31 @@ Flask-Blog Admin
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ url_for('admin') }}">Admin</a>
+      <a class="navbar-brand" href="{{ url_for('.overview') }}">Admin</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
         <li><a href="{{ url_for('blog') }}">Blog</a></li>
-        <li><a href="#">Posts</a></li>
+        <li><a href="{{ url_for('.posts') }}">Posts</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><a href="{{ url_for('.settings') }}"><span class="glyphicon glyphicon-user"></span> {{ current_user.name }}</a></li>
+        <li><a href="{{ url_for('auth.logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>
 </nav>
 <div id="content" class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   {% block content %}{% endblock %}
 </div>
 {% endblock %}

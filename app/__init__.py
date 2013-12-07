@@ -11,7 +11,8 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 lm = LoginManager(app)
-lm.login_view = "login"
+lm.login_view = 'auth.login'
+lm.login_message_category = 'info'
 
 
 # Jinja
@@ -90,8 +91,12 @@ app.jinja_env.filters['month_name'] = month_name
 app.jinja_env.filters['markdown'] = markdown
 
 from app import views
-from app.api import auth, users, posts
 
-app.register_blueprint(auth.bp)
-app.register_blueprint(users.bp)
-app.register_blueprint(posts.bp)
+app.register_blueprint(views.auth)
+app.register_blueprint(views.admin)
+
+#from app.api import auth, users, posts
+
+#app.register_blueprint(auth.bp)
+#app.register_blueprint(users.bp)
+#app.register_blueprint(posts.bp)

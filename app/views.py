@@ -1,8 +1,9 @@
-from flask import render_template, redirect, url_for
-from flask.ext.login import login_required, login_user, logout_user
+from flask import render_template, redirect, url_for, Blueprint, flash
+from flask.ext.login import login_required, login_user, logout_user, \
+    current_user
 
-from app import app
-from app.forms import LoginForm
+from app import app, db
+from app.forms import LoginForm, ChangePasswordForm, ChangeUsernameForm
 from app.models import Post
 
 
@@ -63,24 +64,66 @@ def detail(slug):
     return render_template('frontend/detail.html', post=post)
 
 
-@app.route('/admin')
+auth = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    """Show login page."""
+    form = LoginForm()
+    if form.validate_on_submit():
+        login_user(user=form.user, remember=form.remember_me.data)
+        return redirect(url_for('admin.overview'))
+    return render_template('auth/login.html', form=form)
+
+
+@auth.route('/logout')
 @login_required
-def admin():
+def logout():
+    """Logout authenticated user."""
+    logout_user()
+    return redirect(url_for('blog'))
+
+
+admin = Blueprint('admin', __name__, url_prefix='/admin')
+
+
+@admin.route('/')
+@login_required
+def overview():
     """Show admin overview page."""
     return render_template('admin/overview.html')
 
 
-@app.route('/auth/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        login_user(user=form.user, remember=form.remember_me.data)
-        return redirect(url_for('admin'))
-    return render_template('auth/login.html', form=form)
-
-
-@app.route('/auth/logout')
+@admin.route('/settings', methods=['GET', 'POST'])
 @login_required
-def logout():
-    logout_user()
-    return redirect(url_for('blog'))
+def settings():
+    """Show settings for authenticated user."""
+
+    chpwd = ChangePasswordForm(prefix='pwd')
+    chusr = ChangeUsernameForm(prefix='usr')
+
+    if chpwd.submit.data and chpwd.validate_on_submit():
+        current_user.change_password(chpwd.new_password.data)
+        db.session.commit()
+        flash('Successfully changed password!', 'success')
+
+    if chusr.submit.data and chusr.validate_on_submit():
+        current_user.name = chusr.username.data
+        db.session.commit()
+        flash('Successfully changed username!', 'success')
+
+    return render_template('admin/settings.html', chpwd=chpwd, chusr=chusr)
+
+
+@admin.route('/posts')
+@login_required
+def posts():
+    """Show all posts."""
+    return render_template('admin/posts.html')
+
+
+@admin.route('/create_post')
+@login_required
+def create_post():
+    pass

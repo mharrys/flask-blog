@@ -1,5 +1,6 @@
+from flask.ext.login import current_user
 from flask.ext.wtf import Form, TextField, TextAreaField, validators, \
-    HiddenField, BooleanField, PasswordField
+    HiddenField, BooleanField, PasswordField, SubmitField
 
 from app.helpers import is_name
 from app.models import User
@@ -34,6 +35,43 @@ class LoginForm(Form):
             return False
         # Successfully validated
         return True
+
+
+class ChangePasswordForm(Form):
+    password = PasswordField('Current Password', [
+        validators.Required(),
+        validators.length(min=1, max=64)
+    ])
+    new_password = PasswordField('New Password', [
+        validators.Required(),
+        validators.length(min=1, max=64),
+        validators.EqualTo('confirm', message='Passwords must match.'),
+    ])
+    confirm = PasswordField('Confirm New Password', [
+        validators.Required(),
+        validators.length(min=1, max=64)
+    ])
+    submit = SubmitField('Change Password')
+
+    def validate_password(form, field):
+        password = field.data
+        if not current_user.compare_password(password):
+            raise validators.ValidationError('Current password is wrong.')
+
+
+class ChangeUsernameForm(Form):
+    username = TextField('New Username', [
+        validators.Required(),
+        validators.length(min=2, max=64),
+        is_name
+    ])
+    submit = SubmitField('Change Username')
+
+    def validate_username(form, field):
+        username = field.data
+        form.user = User.query.filter_by(name=username).first()
+        if form.user:
+            raise validators.ValidationError('Username already exists.')
 
 
 class CommentForm(Form):
