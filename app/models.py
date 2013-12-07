@@ -8,8 +8,8 @@ from app.helpers import slugify, utcnow
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     registered = db.Column(db.DateTime, default=utcnow)
-    name = db.Column(db.String(50), nullable=False, unique=True)
-    password_hash = db.Column(db.String(60))
+    name = db.Column(db.String(64), nullable=False, unique=True)
+    password_hash = db.Column(db.String(64))
     posts = db.relationship(
         'Post',
         order_by='Post.published.desc()',
