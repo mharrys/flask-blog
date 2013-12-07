@@ -13,7 +13,9 @@ Flask-Blog Ooops!
     <div class="error">
       <h2 class="error-heading">{% block error_title %}{% endblock %}</h2>
       <h4>{% block error_text %}{% endblock %}</h4>
-      <h4><a class="btn btn-primary" href="{{ url_for('blog') }}">Back to blog</a></h4>
+      <p>
+        <a href="{{ url_for('blog') }}">Back to blog</a>{% if current_user.is_authenticated() %} or <a href="{{ url_for('admin') }}">Back to admin</a>{% endif %}
+      </p>
     </div>
   </div>
 {% endblock %}
