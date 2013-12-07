@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Archive</h1>
+{% if posts %}
+  <ul class="list-unstyled">
+    {% for post in posts %}
+      {% set y = post.published.year %}
+      {% set m = post.published.month %}
+      {% if loop.first or (y != prev_y or m != prev_m) %}
+        <li>
+          <h3>{{ y }} {{ m|month_name }}</h3>
+          <ul>
+            {% for post in posts if post.published.year == y and post.published.month == m %}
+              <li>
+                <div id="post-headline">
+                  <a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title }}</a>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% set prev_y = y %}
+        {% set prev_m = m %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Empty.</p>
+{% endif %}
+{% endblock %}

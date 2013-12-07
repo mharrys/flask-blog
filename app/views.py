@@ -6,17 +6,17 @@ from app.models import Post
 
 @app.errorhandler(403)
 def forbidden(e):
-    return render_template('403.html'), 403
+    return render_template('error/403.html'), 403
 
 
 @app.errorhandler(404)
 def not_found(e):
-    return render_template('404.html'), 404
+    return render_template('error/404.html'), 404
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html'), 500
+    return render_template('error/500.html'), 500
 
 
 @app.route('/')
@@ -32,7 +32,7 @@ def blog(page=1):
     pagination = Post.query.filter_by(visible=True) \
                            .order_by(Post.published.desc()) \
                            .paginate(page, Post.PER_PAGE, False)
-    return render_template('blog.html', pagination=pagination)
+    return render_template('frontend/blog.html', pagination=pagination)
 
 
 @app.route('/archive')
@@ -44,7 +44,7 @@ def archive():
     """
     posts = Post.query.filter_by(visible=True) \
                       .order_by(Post.published.desc())
-    return render_template('archive.html', posts=posts)
+    return render_template('frontend/archive.html', posts=posts)
 
 
 @app.route('/<path:slug>', methods=['GET', 'POST'])
@@ -58,7 +58,7 @@ def detail(slug):
     """
     post = Post.query.filter_by(visible=True, slug=slug) \
                      .first_or_404()
-    return render_template('detail.html', post=post)
+    return render_template('frontend/detail.html', post=post)
 
 
 @app.route('/admin')
@@ -73,3 +73,13 @@ def admin():
 
     """
     return render_template('admin.html')
+
+
+@app.route('/auth/login')
+def login():
+    return render_template('auth/login.html')
+
+
+@app.route('/auth/logout')
+def logout():
+    pass
