@@ -1,4 +1,5 @@
 from flask import Flask, Markup
+from flask.ext.login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
 from markdown2 import markdown as md2
 
@@ -9,9 +10,11 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
+lm = LoginManager(app)
+lm.login_view = "login"
+
 
 # Jinja
-
 
 def date(value):
     """Formats datetime object to a yyyy-mm-dd string."""

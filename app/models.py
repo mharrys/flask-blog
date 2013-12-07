@@ -1,10 +1,11 @@
 from flask.ext.bcrypt import generate_password_hash, check_password_hash
+from flask.ext.login import UserMixin
 
-from app import db
+from app import db, lm
 from app.helpers import slugify, utcnow
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     registered = db.Column(db.DateTime, default=utcnow)
     name = db.Column(db.String(50), nullable=False, unique=True)
@@ -40,6 +41,11 @@ class User(db.Model):
             'name': self.name,
             'posts_url': '/api/users/%s/posts' % self.id,
         }
+
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(id)
 
 
 class Post(db.Model):

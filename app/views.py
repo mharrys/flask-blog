@@ -1,6 +1,8 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
+from flask.ext.login import login_required, login_user, logout_user
 
 from app import app
+from app.forms import LoginForm
 from app.models import Post
 
 
@@ -62,16 +64,23 @@ def detail(slug):
 
 
 @app.route('/admin')
+@login_required
 def admin():
     """Show admin overview page."""
     return render_template('admin/overview.html')
 
 
-@app.route('/auth/login')
+@app.route('/auth/login', methods=['GET', 'POST'])
 def login():
-    return render_template('auth/login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        login_user(user=form.user, remember=form.remember_me.data)
+        return redirect(url_for('admin'))
+    return render_template('auth/login.html', form=form)
 
 
 @app.route('/auth/logout')
+@login_required
 def logout():
-    pass
+    logout_user()
+    return redirect(url_for('blog'))

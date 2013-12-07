@@ -3,12 +3,13 @@
 {% block body %}
 {# HTML from http://getbootstrap.com/examples/signin/ #}
 <div class="container">
-  <form class="form-signin" role="form">
+  <form class="form-signin" role="form" method="POST" action="./login">
+    {{ form.csrf_token }}
     <h2 class="form-signin-heading">Authorization Required</h2>
-    <input type="text" class="form-control" placeholder="Username" required autofocus>
-    <input type="password" class="form-control" placeholder="Password" required>
+    <input id="username" name="username" type="text" class="form-control" placeholder="Username" required autofocus>
+    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
     <label class="checkbox">
-      <input type="checkbox" value="remember-me"> Remember me
+      <input id="remember_me" name="remember_me" type="checkbox" value="remember-me"> Remember me
     </label>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
   </form>
