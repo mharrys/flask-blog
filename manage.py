@@ -30,48 +30,48 @@ def filldb():
 
     post = Post(
         title=u'Hello, world!',
-        body=POST_1,
+        markup=POST_1,
         author_id=admin.id,
         visible=True,
     )
     db.session.add(post)
-    post.published = datetime(2011, 06, 13)
-    post.edit(post.title, post.body, True)
+    post.created = datetime(2011, 06, 13)
+    post.update(post.title, post.markup, True)
     post = Post(
         title=u'Random Words 1',
-        body=POST_5,
+        markup=POST_5,
         author_id=admin.id,
         visible=True,
     )
     db.session.add(post)
-    post.published = datetime(2012, 8, 15)
-    post.edit(post.title, post.body, True)
+    post.created = datetime(2012, 8, 15)
+    post.update(post.title, post.markup, True)
     post = Post(
         title=u'Random Words 2',
-        body=POST_2,
+        markup=POST_2,
         author_id=admin.id,
         visible=True,
     )
     db.session.add(post)
-    post.published = datetime(2012, 12, 24)
-    post.edit(post.title, post.body, True)
+    post.created = datetime(2012, 12, 24)
+    post.update(post.title, post.markup, True)
     post = Post(
         title=u'Picture of a cat!',
-        body=POST_3,
+        markup=POST_3,
         author_id=admin.id,
         visible=True,
     )
     db.session.add(post)
     post = Post(
         title=u'Some code',
-        body=POST_4,
+        markup=POST_4,
         author_id=admin.id,
         visible=True,
     )
     db.session.add(post)
     post = Post(
         title=u'Random Words 3',
-        body=POST_5,
+        markup=POST_5,
         author_id=admin.id,
         visible=True,
     )
