@@ -8,10 +8,10 @@
         <h1><a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title|safe }}</a></h1>
       </div>
       <div id="post-meta">
-        <p>Posted on {{ post.published|date_pretty }}</p>
+        <p>Posted on {{ post.created|date_pretty }}</p>
       </div>
       <div id="post-body">
-        {{ post.body|markdown }}
+        {{ post.markup|markdown }}
       </div>
     </div>
   {% endfor %}
