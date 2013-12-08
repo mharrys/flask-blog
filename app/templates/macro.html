@@ -11,3 +11,22 @@
     {{ field(class="form-control")|safe }}
 </div>
 {% endmacro %}
+
+{% macro render_post(post) %}
+<div id="post-title">
+  <h3><strong><a href="{{ url_for('detail', slug=post.slug) }}">{{ post.title|safe }}</a></strong></h3>
+</div>
+<div id="post-meta">
+  <small>Posted on {{ post.created|date_pretty }}</small>
+</div>
+<div id="post-markup">
+  {{ post.markup|markdown }}
+</div>
+{% if post.is_updated %}
+  <div>
+    <p>
+      <small><em>Updated {{ post.updated|datetime }}</em></small>
+    </p>
+  </div>
+{% endif %}
+{% endmacro %}
