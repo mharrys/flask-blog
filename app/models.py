@@ -12,7 +12,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(64))
     posts = db.relationship(
         'Post',
-        order_by='Post.published.desc()',
+        order_by='Post.created.desc()',
         passive_updates=False,
         cascade='all,delete-orphan',
         backref='author',
