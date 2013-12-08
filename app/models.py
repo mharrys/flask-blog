@@ -33,15 +33,6 @@ class User(db.Model, UserMixin):
         """Change current password to a new password."""
         self.password_hash = generate_password_hash(password, 6)
 
-    def to_json(self):
-        """Return this class JSON serialized. Only public params."""
-        return {
-            'id': self.id,
-            'registered': self.registered.isoformat(),
-            'name': self.name,
-            'posts_url': '/api/users/%s/posts' % self.id,
-        }
-
 
 @lm.user_loader
 def load_user(id):
@@ -105,20 +96,6 @@ class Post(db.Model):
     def is_edited(self):
         """Validate if this post has been edited since published."""
         return self.edited > self.published
-
-    def to_json(self):
-        return {
-            'id': self.id,
-            'published': self.published.isoformat(),
-            'edited': self.edited.isoformat(),
-            'title': self.title,
-            'markup': self.body,
-            'slug': self.slug,
-            'author': self.author.name,
-            'author_id': self.author_id,
-            'comments_url': '/api/posts/%s/comments' % self.id,
-            'visible': self.visible,
-        }
 
 
 class Comment(db.Model):
