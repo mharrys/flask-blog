@@ -6,6 +6,17 @@ from app.helpers import is_name
 from app.models import User
 
 
+class PostForm(Form):
+    title = TextField('Title', [
+        validators.Required(),
+        validators.length(min=1, max=64)
+    ])
+    markup = TextAreaField('Markup', [
+        validators.Required()
+    ])
+    visible = BooleanField('Visible for public', default=False)
+
+
 class LoginForm(Form):
     username = TextField('Username', [
         validators.Required(),
