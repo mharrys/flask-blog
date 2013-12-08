@@ -43,59 +43,46 @@ class Post(db.Model):
     PER_PAGE = 5
 
     id = db.Column(db.Integer, primary_key=True)
-    published = db.Column(db.DateTime, nullable=False)
-    edited = db.Column(db.DateTime, nullable=False)
+    created = db.Column(db.DateTime, nullable=False)
+    updated = db.Column(db.DateTime, nullable=False)
     title = db.Column(db.String, nullable=False)
-    body = db.Column(db.String, nullable=False)
+    markup = db.Column(db.String, nullable=False)
     slug = db.Column(db.String, nullable=False, unique=True)
     author_id = db.Column(
         db.Integer,
         db.ForeignKey('user.id'),
         nullable=False,
     )
-    comments = db.relationship(
-        "Comment",
-        order_by="Comment.posted",
-        passive_updates=False,
-        cascade="all,delete-orphan",
-        backref="post",
-    )
     visible = db.Column(db.Boolean, default=False)
 
-    def __init__(self, title, body, author_id, visible):
-        self.published = utcnow()
-        self.edited = self.published
+    def __init__(self, title, markup, author_id, visible):
+        self.created = utcnow()
+        self.updated = self.created
         self.title = title
-        self.body = body
-        self.slug = slugify(self.published, title)
+        self.markup = markup
+        self.slug = slugify(self.created, title)
         self.author_id = author_id
         self.visible = visible
 
     def __repr__(self):
         return u'<Post(%s,%s,%s)>' % (self.id, self.slug, self.author.name)
 
-    def edit(self, title, body, visible):
-        """Edit post columns."""
-        self.edited = utcnow()
-        self.title = title
-        self.body = body
-        self.slug = slugify(self.published, title)
-        self.visible = visible
+    def update(self, title, markup, visible):
+        """Update post values.
 
-    def change_title(self, title):
-        """Change title.
-
-        The post slug will be updated for the new title with the date the post
-        was published.
+        Handles title slug and last update tracking.
 
         """
+        self.updated = utcnow()
         self.title = title
-        self.slug = slugify(self.published, title)
+        self.markup = markup
+        self.slug = slugify(self.created, title)
+        self.visible = visible
 
     @property
-    def is_edited(self):
-        """Validate if this post has been edited since published."""
-        return self.edited > self.published
+    def is_updated(self):
+        """Validate if this post has been updated since created."""
+        return self.updated > self.created
 
 
 class Comment(db.Model):
