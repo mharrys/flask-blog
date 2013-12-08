@@ -83,38 +83,3 @@ class Post(db.Model):
     def is_updated(self):
         """Validate if this post has been updated since created."""
         return self.updated > self.created
-
-
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    posted = db.Column(db.DateTime, default=utcnow)
-    name = db.Column(db.String(50), nullable=False)
-    body = db.Column(db.String(510), nullable=False)
-    ip = db.Column(db.String(45), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    reply_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
-    replies = db.relationship(
-        'Comment',
-        passive_updates=False,
-        cascade='all,delete-orphan',
-    )
-
-    def __init__(self, name, body, ip, post_id, reply_id=None):
-        self.name = name
-        self.body = body
-        self.ip = ip
-        self.post_id = post_id
-        self.reply_id = reply_id
-
-    def __repr__(self):
-        return u'<Comment(%s,%s,%s)>' % (self.id, self.name, self.body)
-
-    @property
-    def is_root(self):
-        """Validate if this is not a reply to another comment."""
-        return self.reply_id is None
-
-    @property
-    def has_replies(self):
-        """Validate if this comment has any comment replies."""
-        return len(self.replies) > 0
