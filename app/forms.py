@@ -1,6 +1,6 @@
 from flask.ext.login import current_user
 from flask.ext.wtf import Form, TextField, TextAreaField, validators, \
-    HiddenField, BooleanField, PasswordField, SubmitField
+    BooleanField, PasswordField, SubmitField
 
 from app.helpers import is_name
 from app.models import User
@@ -72,17 +72,3 @@ class ChangeUsernameForm(Form):
         form.user = User.query.filter_by(name=username).first()
         if form.user:
             raise validators.ValidationError('Username already exists.')
-
-
-class CommentForm(Form):
-    name = TextField('Name', [
-        validators.Required(),
-        validators.Length(min=2, max=50),
-        is_name,
-    ])
-    body = TextAreaField('Comment', [
-        validators.Required(),
-        validators.Length(min=2, max=510),
-    ])
-    user_id = HiddenField('user_id')
-    reply_id = HiddenField('reply_id')
