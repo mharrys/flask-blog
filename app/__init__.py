@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 
 lm = LoginManager(app)
 lm.login_view = 'auth.login'
-lm.login_message_category = 'info'
+lm.login_message = None
 
 
 # Jinja
