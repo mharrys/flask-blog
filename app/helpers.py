@@ -3,7 +3,7 @@ import unidecode
 
 from datetime import datetime
 
-from flask.ext.wtf import regexp
+from wtforms.validators import regexp
 
 is_name = regexp(
     # not using \w since it allows for unlimited underscores

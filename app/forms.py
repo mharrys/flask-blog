@@ -1,6 +1,8 @@
 from flask.ext.login import current_user
-from flask.ext.wtf import Form, TextField, TextAreaField, validators, \
-    BooleanField, PasswordField, SubmitField
+from flask.ext.wtf import Form
+from wtforms import TextField, TextAreaField, BooleanField, PasswordField, \
+    SubmitField
+from wtforms.validators import Required, length, EqualTo, ValidationError
 
 from app.helpers import is_name
 from app.models import User
@@ -8,23 +10,23 @@ from app.models import User
 
 class PostForm(Form):
     title = TextField('Title', [
-        validators.Required(),
-        validators.length(min=1, max=256)
+        Required(),
+        length(min=1, max=256)
     ])
     markup = TextAreaField('Markup', [
-        validators.Required()
+        Required()
     ])
     visible = BooleanField('Visible to public', default=False)
 
 
 class LoginForm(Form):
     username = TextField('Username', [
-        validators.Required(),
-        validators.length(min=1, max=64)
+        Required(),
+        length(min=1, max=64)
     ])
     password = PasswordField('Password', [
-        validators.Required(),
-        validators.length(min=1, max=64)
+        Required(),
+        length(min=1, max=64)
     ])
     remember_me = BooleanField('Remember me', default=False)
 
@@ -50,30 +52,30 @@ class LoginForm(Form):
 
 class ChangePasswordForm(Form):
     password = PasswordField('Current Password', [
-        validators.Required(),
-        validators.length(min=1, max=64)
+        Required(),
+        length(min=1, max=64)
     ])
     new_password = PasswordField('New Password', [
-        validators.Required(),
-        validators.length(min=1, max=64),
-        validators.EqualTo('confirm', message='Passwords must match.'),
+        Required(),
+        length(min=1, max=64),
+        EqualTo('confirm', message='Passwords must match.'),
     ])
     confirm = PasswordField('Confirm New Password', [
-        validators.Required(),
-        validators.length(min=1, max=64)
+        Required(),
+        length(min=1, max=64)
     ])
     submit = SubmitField('Change Password')
 
     def validate_password(form, field):
         password = field.data
         if not current_user.compare_password(password):
-            raise validators.ValidationError('Current password is wrong.')
+            raise ValidationError('Current password is wrong.')
 
 
 class ChangeUsernameForm(Form):
     username = TextField('New Username', [
-        validators.Required(),
-        validators.length(min=2, max=64),
+        Required(),
+        length(min=2, max=64),
         is_name
     ])
     submit = SubmitField('Change Username')
@@ -82,4 +84,4 @@ class ChangeUsernameForm(Form):
         username = field.data
         form.user = User.query.filter_by(name=username).first()
         if form.user:
-            raise validators.ValidationError('Username already exists.')
+            raise ValidationError('Username already exists.')
