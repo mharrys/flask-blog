@@ -10,7 +10,7 @@
     {% from "macro.html" import render_field %}
 
     <h3>Change Password</h3>
-    <form role="form" method="POST" action="./settings">
+    <form role="form" method="POST" action="{{ url_for('.settings') }}">
       {{ chpwd.csrf_token }}
       {{ render_field(chpwd.password) }}
       {{ render_field(chpwd.new_password) }}
@@ -21,7 +21,7 @@
     <hr>
 
     <h3>Change Username</h3>
-    <form role="form" method="POST" action="./settings">
+    <form role="form" method="POST" action="{{ url_for('.settings') }}">
       {{ chusr.csrf_token }}
       {{ render_field(chusr.username) }}
       {{ chusr.submit(class="btn btn-default") }}
