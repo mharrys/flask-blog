@@ -1,5 +1,4 @@
 *.db
-app/static/.sass-cache/
 venv
 
 *.py[cod]
