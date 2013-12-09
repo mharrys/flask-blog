@@ -1,23 +1,20 @@
 # Flask-Blog
 
-Project still in early stages. 
+Simple blog with an administrator area created with the purpose of learning
+[Flask](http://flask.pocoo.org) and Python. The design is prototyped with
+[Bootstrap](http://twitter.github.io/bootstrap).
 
-The application now features a [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer) API backend for all administration tasks which is controlled by the administration application written in Javascript with [Backbone.Marionette](http://marionettejs.com), [RequireJS](http://requirejs.org) and [Moment.js](http://momentjs.com). The visual is prototyped with [Bootstrap](http://twitter.github.io/bootstrap).
-
-The authorization is for now being done with HTTP Basic and should **only** be used over SSL. Every request sent to the server API requires valid authorization header. The [Backbone.BasicAuth](https://github.com/fiznool/backbone.basicauth) library is used to help set this header, however this project is using a [fork](https://github.com/mharrys/backbone.basicauth) for now.
-
-The blog is still written like any traditional Flask application without any need for Javascript. The visual is written from the ground up with [Sass](http://sass-lang.com) and [Susy](http://susy.oddbird.net).
-
-Some future plans involves tags, admin roles, test for views, public author profile, syntax highlighting for code snippets, better comment system and image upload.
+Some future plans involves tags, roles, public author profile, syntax
+highlighting for code snippets, comment system, image upload and more tests.
 
 ## Demo
 
-There is a demo available using the configuration files located in the server folder. The server is using [nignx](http://nginx.org/), [gunicorn](http://gunicorn.org/), [supervisor](http://supervisord.org/) and [postgresql](http://www.postgresql.org/). View the HTTP version or HTTPS version (will give a warning since its a self-signed SSL certificate).
+There is a (read-only) demo available using the configuration files located in
+the server folder. The server is using [nignx](http://nginx.org/),
+[gunicorn](http://gunicorn.org/), [supervisor](http://supervisord.org/) and
+[postgresql](http://www.postgresql.org/).
 
-The site is hopefully in read-only mode.
-
-+ [HTTP Demo](http://flask-blog.trixz.se/) 
-+ [HTTPS Demo](https://flask-blog.trixz.se/)
++ [HTTP Demo](http://flask-blog.trixz.se/)
 
 ## Install
 
@@ -25,16 +22,18 @@ The site is hopefully in read-only mode.
 
     $ git clone git://github.com/mharrys/flask-blog.git
     $ cd flask-blog
-    
+
 ### OS Packages
 
-You will at least need the python development package though there might be more packages required depending on your setup.
+You will at least need the python development package though there might be
+more packages required depending on your setup.
 
     $ sudo apt-get install python-dev
 
 ### Python Packages
 
-Click [here](http://www.pip-installer.org/en/latest/index.html) for more information on using pip and installing a virtual environment.
+Click [here](http://www.pip-installer.org/en/latest/index.html) for more
+information on using pip and installing a virtual environment.
 
     $ virtualenv venv
     $ source venv/bin/activate
@@ -42,7 +41,8 @@ Click [here](http://www.pip-installer.org/en/latest/index.html) for more informa
 
 ### Initialize
 
-The following command will create all tables and fill the database with dummy blog posts.
+The following command will create all tables and fill the database with dummy
+blog posts.
 
     (venv)$ python manage.py init
 
