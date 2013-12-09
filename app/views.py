@@ -10,16 +10,19 @@ from app.models import Post
 
 @app.errorhandler(403)
 def forbidden(e):
+    """Show error page for HTTP 403 (Forbidden)."""
     return render_template('error/403.html'), 403
 
 
 @app.errorhandler(404)
 def not_found(e):
+    """Show error page for HTTP 404 (Not Found)."""
     return render_template('error/404.html'), 404
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
+    """Show error page for HTTP 500 (Internal Server Error)."""
     return render_template('error/500.html'), 500
 
 
@@ -29,8 +32,7 @@ def blog(page=1):
     """Show all blog posts in a paginated list.
 
     This will only show posts that are marked to be visible. Number of posts
-    visible per page has been hardcoded. Note that its the pagination object
-    that is being sent in to the template and not the actual posts.
+    visible per page is hardcoded.
 
     """
     pagination = Post.query.filter_by(visible=True) \
@@ -41,7 +43,7 @@ def blog(page=1):
 
 @app.route('/<path:slug>', methods=['GET', 'POST'])
 def detail(slug):
-    """Show post details with specified slug.
+    """Show details of post with specified slug.
 
     If the specified slug could not be found a HTTP 404 response will be
     generated. Note that this will only show details of the post if its
@@ -58,7 +60,14 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    """Show login page."""
+    """Show login page.
+
+    Unauthorized users will always be redirected to this view when attempting
+    to access a protected view. Upon successful authorization the user will
+    be redirected to the protected view the unauthorized user was trying to
+    access. Default redirection is to the admin overview page.
+
+    """
     form = LoginForm()
     if form.validate_on_submit():
         login_user(user=form.user, remember=form.remember_me.data)
@@ -108,7 +117,11 @@ def settings():
 @admin.route('/posts/page/<int:page>')
 @login_required
 def posts(page=1):
-    """Show all posts."""
+    """Show all posts in archive.
+
+    Show posts (visible and hidden) created by all existing users.
+
+    """
     pagination = Post.query.filter_by() \
                            .order_by(Post.created.desc()) \
                            .paginate(page, Post.PER_PAGE, False)
@@ -118,6 +131,12 @@ def posts(page=1):
 @admin.route('/new_post', methods=['GET', 'POST'])
 @login_required
 def new_post():
+    """Show create new post page.
+
+    Allows user to create a new post. After creating a post the user will be
+    redirected to the edit post page.
+
+    """
     form = PostForm()
     if form.validate_on_submit():
         post = Post(
@@ -136,6 +155,12 @@ def new_post():
 @admin.route('/edit_post/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(id):
+    """Show edit post page.
+
+    Allows user to update details for specified existing post. If the
+    specified post could not be found a HTTP 404 response will be generated.
+
+    """
     post = Post.query.get_or_404(id)
     form = PostForm(title=post.title, markup=post.markup, visible=post.visible)
     if form.validate_on_submit():
@@ -148,6 +173,12 @@ def edit_post(id):
 @admin.route('/delete_post/<int:id>')
 @login_required
 def delete_post(id):
+    """Delete specified post.
+
+    Delete specified post without confirmation. If the specified post could
+    not be found a HTTP 404 response will be generated.
+
+    """
     post = Post.query.get_or_404(id)
     db.session.delete(post)
     db.session.commit()
