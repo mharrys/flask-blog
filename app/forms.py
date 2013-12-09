@@ -14,7 +14,7 @@ class PostForm(Form):
     markup = TextAreaField('Markup', [
         validators.Required()
     ])
-    visible = BooleanField('Visible for public', default=False)
+    visible = BooleanField('Visible to public', default=False)
 
 
 class LoginForm(Form):
