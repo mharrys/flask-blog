@@ -6,7 +6,8 @@
     <div class="page-header">
       <h1>Overview</h1>
     </div>
-    <p>Welcome {{ current_user.name }}!</p>
+    <p>Welcome <strong>{{ current_user.name }}</strong>!</p>
+    <p>Your last login was <strong>{{ current_user.last_login_at|datetime }}</strong> from <strong>{{ current_user.last_login_ip }}</strong> (for this session <strong>{{ current_user.current_login_ip }}</strong>).</p>
   </div>
 </div>
 {% endblock %}

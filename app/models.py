@@ -19,6 +19,10 @@ class User(db.Model, UserMixin):
         cascade='all,delete-orphan',
         backref='author',
     )
+    last_login_at = db.Column(db.DateTime)
+    last_login_ip = db.Column(db.String(45))
+    current_login_at = db.Column(db.DateTime)
+    current_login_ip = db.Column(db.String(45))
 
     def __init__(self, name, password):
         self.name = name

@@ -1,4 +1,7 @@
-from flask import render_template, redirect, url_for, Blueprint, flash
+from datetime import datetime
+
+from flask import render_template, redirect, url_for, Blueprint, flash, \
+    request
 from flask.ext.login import login_required, login_user, logout_user, \
     current_user
 
@@ -71,6 +74,17 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         login_user(user=form.user, remember=form.remember_me.data)
+
+        at = datetime.utcnow()
+        ip = request.remote_addr or 'unknown'
+
+        current_user.last_login_at = current_user.current_login_at or at
+        current_user.last_login_ip = current_user.current_login_ip or ip
+
+        current_user.current_login_at = at
+        current_user.current_login_ip = ip
+
+        db.session.commit()
         return redirect(url_for('admin.overview'))
     return render_template('auth/login.html', form=form)
 
