@@ -5,7 +5,7 @@ Flask-Blog Ooops!
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/custom/error.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/error.css') }}">
 {% endblock %}
 
 {% block body %}

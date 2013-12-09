@@ -5,7 +5,7 @@ Flask-Blog
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/custom/frontend.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/frontend.css') }}">
 {% endblock %}
 
 {% block body %}

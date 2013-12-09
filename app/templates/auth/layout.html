@@ -5,5 +5,5 @@ Flask-Blog Authentication
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/custom/auth.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/auth.css') }}">
 {% endblock %}
