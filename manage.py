@@ -1,7 +1,9 @@
+from datetime import datetime
+
+from flask.ext.script import Manager
+
 from app import app, db
 from app.models import User, Post
-from datetime import datetime
-from flask.ext.script import Manager
 
 manager = Manager(app)
 
