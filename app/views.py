@@ -3,7 +3,8 @@ from flask.ext.login import login_required, login_user, logout_user, \
     current_user
 
 from app import app, db
-from app.forms import LoginForm, ChangePasswordForm, ChangeUsernameForm
+from app.forms import LoginForm, ChangePasswordForm, ChangeUsernameForm, \
+    PostForm
 from app.models import Post
 
 
@@ -33,21 +34,9 @@ def blog(page=1):
 
     """
     pagination = Post.query.filter_by(visible=True) \
-                           .order_by(Post.published.desc()) \
+                           .order_by(Post.created.desc()) \
                            .paginate(page, Post.PER_PAGE, False)
     return render_template('frontend/blog.html', pagination=pagination)
-
-
-@app.route('/archive')
-def archive():
-    """Show all blog posts in an foreseeable view.
-
-    This will only show posts that are marked to be visible.
-
-    """
-    posts = Post.query.filter_by(visible=True) \
-                      .order_by(Post.published.desc())
-    return render_template('frontend/archive.html', posts=posts)
 
 
 @app.route('/<path:slug>', methods=['GET', 'POST'])
@@ -99,31 +88,68 @@ def overview():
 @login_required
 def settings():
     """Show settings for authenticated user."""
-
     chpwd = ChangePasswordForm(prefix='pwd')
     chusr = ChangeUsernameForm(prefix='usr')
 
     if chpwd.submit.data and chpwd.validate_on_submit():
         current_user.change_password(chpwd.new_password.data)
         db.session.commit()
-        flash('Successfully changed password!', 'success')
+        flash('Changed password!', 'success')
 
     if chusr.submit.data and chusr.validate_on_submit():
         current_user.name = chusr.username.data
         db.session.commit()
-        flash('Successfully changed username!', 'success')
+        flash('Changed username!', 'success')
 
     return render_template('admin/settings.html', chpwd=chpwd, chusr=chusr)
 
 
 @admin.route('/posts')
+@admin.route('/posts/page/<int:page>')
 @login_required
-def posts():
+def posts(page=1):
     """Show all posts."""
-    return render_template('admin/posts.html')
+    pagination = Post.query.filter_by() \
+                           .order_by(Post.created.desc()) \
+                           .paginate(page, Post.PER_PAGE, False)
+    return render_template('admin/post/list.html', pagination=pagination)
 
 
-@admin.route('/create_post')
+@admin.route('/new_post', methods=['GET', 'POST'])
 @login_required
-def create_post():
-    pass
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(
+            form.title.data,
+            form.markup.data,
+            current_user.id,
+            form.visible.data
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash('Created post <strong>%s</strong>!' % post.title, 'success')
+        return redirect(url_for('admin.edit_post', id=post.id))
+    return render_template('admin/post/new.html', form=form)
+
+
+@admin.route('/edit_post/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(id):
+    post = Post.query.get_or_404(id)
+    form = PostForm(title=post.title, markup=post.markup, visible=post.visible)
+    if form.validate_on_submit():
+        post.update(form.title.data, form.markup.data, form.visible.data)
+        db.session.commit()
+        flash('Saved changes!', 'info')
+    return render_template('admin/post/edit.html', post=post, form=form)
+
+
+@admin.route('/delete_post/<int:id>')
+@login_required
+def delete_post(id):
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Deleted post <strong>%s</strong>!' % post.title, 'danger')
+    return redirect(url_for('.posts'))

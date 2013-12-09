@@ -1,0 +1,13 @@
+{% extends "admin/post/post.html" %}
+
+{% block page_header %}
+New Post
+{% endblock %}
+
+{% block action %}
+{{ url_for('.new_post') }}
+{% endblock %}
+
+{% block submit_name %}
+Create
+{% endblock %}

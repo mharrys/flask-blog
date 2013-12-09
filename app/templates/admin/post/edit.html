@@ -1,0 +1,13 @@
+{% extends "admin/post/post.html" %}
+
+{% block page_header %}
+Edit Post
+{% endblock %}
+
+{% block action %}
+{{ url_for('.edit_post', id=post.id) }}
+{% endblock %}
+
+{% block submit_name %}
+Save
+{% endblock %}
