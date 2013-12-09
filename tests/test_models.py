@@ -2,7 +2,7 @@ import unittest
 
 from app import app, db
 from app.helpers import slugify
-from app.models import User, Post, Comment
+from app.models import User, Post
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
@@ -36,14 +36,6 @@ def add_post(title=u'latest_title', body=u'body', author_id=1, visible=True):
     return post
 
 
-def add_comment(name=u'anon', body=u'foo', ip=IP, post_id=1, reply_id=None):
-    """Add comment to database and return its model."""
-    comment = Comment(name, body, ip, post_id, reply_id)
-    db.session.add(comment)
-    db.session.commit()
-    return comment
-
-
 class TestModel(unittest.TestCase):
 
     def setUp(self):
@@ -57,8 +49,6 @@ class TestModel(unittest.TestCase):
         self.body = u'body'
         self.author_id = self.user.id
         self.post = add_post(self.title, self.body, self.author_id)
-        # default comment
-        self.comment = add_comment(self.name, self.body)
 
     def tearDown(self):
         db.session.remove()
@@ -118,47 +108,3 @@ class TestPost(TestModel):
         db.session.delete(self.user)
         db.session.commit()
         self.assertEqual(0, len(Post.query.all()))
-
-
-class TestComment(TestModel):
-
-    def test_create(self):
-        # assert default comment was added
-        self.assertEqual(1, len(Comment.query.all()))
-        # assert correct comment values
-        q = Comment.query.get(self.comment.id)
-        self.assertEqual(self.name, q.name)
-        self.assertEqual(self.body, q.body)
-        self.assertEqual(self.post.id, q.post_id)
-
-    def test_delete_post(self):
-        add_comment()
-        self.assertEqual(2, len(Comment.query.all()))
-        # assert all comments to a post gets deleted if post is deleted
-        db.session.delete(self.post)
-        db.session.commit()
-        self.assertEqual(0, len(Comment.query.all()))
-
-    def test_delete_root(self):
-        # assert childs to root are deleted when root is deleted
-        comment_reply = add_comment(reply_id=self.comment.id)
-        add_comment(reply_id=comment_reply.id)
-        db.session.delete(self.comment)
-        db.session.commit()
-        self.assertEqual(0, len(Comment.query.all()))
-
-    def test_is_root(self):
-        # assert default comment is root (not a comment reply)
-        self.assertTrue(self.comment.is_root)
-        # assert comment reply to default comment is not root
-        comment_reply = add_comment(reply_id=self.comment.id)
-        self.assertFalse(comment_reply.is_root)
-        self.assertTrue(self.comment.is_root)
-
-    def test_has_replies(self):
-        # assert default comment has no replies
-        self.assertFalse(self.comment.has_replies)
-        # assert default comment has a reply when added a comment reply
-        comment_reply = add_comment(reply_id=self.comment.id)
-        self.assertTrue(self.comment.has_replies)
-        self.assertFalse(comment_reply.has_replies)
