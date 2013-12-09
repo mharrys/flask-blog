@@ -24,6 +24,7 @@ Flask-Blog Admin
       <ul class="nav navbar-nav navbar-left">
         <li><a href="{{ url_for('blog') }}">Blog</a></li>
         <li><a href="{{ url_for('.posts') }}">Posts</a></li>
+        <li><a href="{{ url_for('.new_post') }}">New Post</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ url_for('.settings') }}"><span class="glyphicon glyphicon-user"></span> {{ current_user.name }}</a></li>
@@ -38,7 +39,7 @@ Flask-Blog Admin
       {% for category, message in messages %}
           <div class="alert alert-{{ category }} alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          {{ message }}
+          {{ message|safe }}
         </div>
       {% endfor %}
     {% endif %}
