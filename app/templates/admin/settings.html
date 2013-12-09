@@ -15,7 +15,7 @@
       {{ render_field(chpwd.password) }}
       {{ render_field(chpwd.new_password) }}
       {{ render_field(chpwd.confirm) }}
-      {{ chpwd.submit(class="btn btn-default") }}
+      {{ chpwd.submit(class="btn btn-primary") }}
     </form>
 
     <hr>
@@ -24,7 +24,7 @@
     <form role="form" method="POST" action="{{ url_for('.settings') }}">
       {{ chusr.csrf_token }}
       {{ render_field(chusr.username) }}
-      {{ chusr.submit(class="btn btn-default") }}
+      {{ chusr.submit(class="btn btn-primary") }}
     </form>
   </div>
 </div>
