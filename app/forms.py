@@ -9,7 +9,7 @@ from app.models import User
 class PostForm(Form):
     title = TextField('Title', [
         validators.Required(),
-        validators.length(min=1, max=64)
+        validators.length(min=1, max=256)
     ])
     markup = TextAreaField('Markup', [
         validators.Required()

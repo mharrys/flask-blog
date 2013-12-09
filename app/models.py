@@ -45,7 +45,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, nullable=False)
     updated = db.Column(db.DateTime, nullable=False)
-    title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String(256), nullable=False)
     markup = db.Column(db.String, nullable=False)
     slug = db.Column(db.String, nullable=False, unique=True)
     author_id = db.Column(
