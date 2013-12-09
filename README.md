@@ -64,4 +64,5 @@ Additional commands are
 
     (venv)$ python manage.py runserver
 
-Login with **admin** as default username and password.
+Login with **admin** as default username and password. Just add /admin to the
+url or press the login icon at the top of the page.
