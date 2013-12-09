@@ -4,7 +4,6 @@ import unidecode
 from datetime import datetime
 
 from flask.ext.wtf import regexp
-from pytz import UTC
 
 is_name = regexp(
     # not using \w since it allows for unlimited underscores
@@ -20,7 +19,3 @@ def slugify(now, str):
     unistr = unidecode.unidecode(str).lower()
     title = re.sub(r'\W+', '-', unistr).strip('-')
     return '%i/%i/%i/%s' % (date.year, date.month, date.day, title)
-
-
-def utcnow():
-    return datetime.utcnow().replace(tzinfo=UTC)

@@ -1,13 +1,15 @@
+from datetime import datetime
+
 from flask.ext.bcrypt import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 
 from app import db, lm
-from app.helpers import slugify, utcnow
+from app.helpers import slugify
 
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    registered = db.Column(db.DateTime, default=utcnow)
+    registered = db.Column(db.DateTime, default=datetime.utcnow)
     name = db.Column(db.String(64), nullable=False, unique=True)
     password_hash = db.Column(db.String(64))
     posts = db.relationship(
@@ -56,7 +58,7 @@ class Post(db.Model):
     visible = db.Column(db.Boolean, default=False)
 
     def __init__(self, title, markup, author_id, visible):
-        self.created = utcnow()
+        self.created = datetime.utcnow()
         self.updated = self.created
         self.title = title
         self.markup = markup
@@ -73,7 +75,7 @@ class Post(db.Model):
         Handles title slug and last update tracking.
 
         """
-        self.updated = utcnow()
+        self.updated = datetime.utcnow()
         self.title = title
         self.markup = markup
         self.slug = slugify(self.created, title)
