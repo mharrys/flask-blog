@@ -9,13 +9,13 @@ Flask-Blog Ooops!
 {% endblock %}
 
 {% block body %}
-  <div class="container">
-    <div class="error">
-      <h2 class="error-heading"><strong>{% block error_title %}{% endblock %}</strong></h2>
-      <h4>{% block error_text %}{% endblock %}</h4>
-      <p>
-        <a href="{{ url_for('blog') }}">Back to blog</a>{% if current_user.is_authenticated() %} or <a href="{{ url_for('admin.overview') }}">Back to admin</a>{% endif %}
-      </p>
-    </div>
+<div class="container">
+  <div class="error">
+    <h2 class="error-heading"><strong>{% block error_title %}{% endblock %}</strong></h2>
+    <h4>{% block error_text %}{% endblock %}</h4>
+    <p>
+      <a href="{{ url_for('blog') }}">Back to blog</a>{% if current_user.is_authenticated() %} or <a href="{{ url_for('admin.overview') }}">Back to admin</a>{% endif %}
+    </p>
   </div>
+</div>
 {% endblock %}
