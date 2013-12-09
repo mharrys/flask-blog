@@ -1,9 +1,8 @@
 {% macro render_field(field) %}
 <div class="form-group {% if field.errors %}has-error{% endif %}">
   {% if field.type == "BooleanField" %}
-    <label class="checkbox">
-      <input id="{{ field.id }}" name="{{ field.name }}" type="checkbox" {% if not field.default %}checked{% endif %}> {{ field.label.text }}
-    </label>
+    {{ field }}
+    {{ field.label(class="control-label") }}
   {% else %}
     {{ field.label(class="control-label") }}
     {% if field.errors %}
