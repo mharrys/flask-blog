@@ -7,15 +7,6 @@ Simple blog with an administrator area created with the purpose of learning
 Some future plans involves tags, roles, public author profile, syntax
 highlighting for code snippets, comment system, image upload and more tests.
 
-## Demo
-
-There is a (read-only) demo available using the configuration files located in
-the server folder. The server is using [nignx](http://nginx.org/),
-[gunicorn](http://gunicorn.org/), [supervisor](http://supervisord.org/) and
-[postgresql](http://www.postgresql.org/).
-
-+ [HTTP Demo](http://flask-blog.trixz.se/)
-
 ## Install
 
 ### Download
