@@ -9,11 +9,6 @@ highlighting for code snippets, comment system, image upload and more tests.
 
 ## Install
 
-### Download
-
-    $ git clone git://github.com/mharrys/flask-blog.git
-    $ cd flask-blog
-
 ### OS Packages
 
 You will at least need the python development package though there might be
