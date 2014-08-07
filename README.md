@@ -7,6 +7,9 @@ Simple blog with an administrator area created with the purpose of learning
 Some future plans involves tags, roles, public author profile, syntax
 highlighting for code snippets, comment system, image upload and more tests.
 
+## License
+Licensed under GNU GPL v3.0.
+
 ## Install
 
 ### OS Packages
